@@ -12,26 +12,103 @@ module.exports = {
     return user;
   },
 
-  getCalendarView: async function(accessToken, start, end, timeZone) {
+  getAllGroups: async function getMyGroups(accessToken, userID) {
+    //ensureScope('Directory.AccessAsUser.All' );
     const client = getAuthenticatedClient(accessToken);
-  
-    const events = await client
-      .
-      api('/me/calendarview')
-      // Add Prefer header to get back times in user's timezone
-      .header("Prefer", `outlook.timezone="${timeZone}"`)
-      // Add the begin and end of the calendar window
-      .query({ startDateTime: start, endDateTime: end })
-      // Get just the properties used by the app
-      .select('subject,organizer,start,end')
-      // Order by start time
-      .orderby('start/dateTime')
-      // Get at most 50 results
-      .top(50)
+
+    return await client  
+      .api(`/users/${userID}/transitiveMemberOf`)
       .get();
-  
-    return events;
-  }
+  },
+
+  getAllPlanners: async function getPlanners(accessToken, groupID) {
+    //ensureScope('Directory.AccessAsUser.All' );
+    const client = getAuthenticatedClient(accessToken);
+
+    return await client
+      .api(`/groups/${groupID}/planner/plans`)
+      .get();
+  },
+
+  getAllTasks: async function getTasks(accessToken, planID) {
+    //ensureScope('Directory.AccessAsUser.All' );
+    const client = getAuthenticatedClient(accessToken);
+
+    return await client
+      .api(`/planner/plans/${planID}/tasks`)
+      .get();
+  },
+
+  getSingleTask: async function getTasks(accessToken, taskID) {
+    //ensureScope('Directory.AccessAsUser.All' );
+    const client = getAuthenticatedClient(accessToken);
+
+    return await client
+      .api(`planner/tasks/${taskID}`)
+      .get();
+  },
+
+  getUserPlanners: async function getUserPlanners(accessToken, userID) {
+    //ensureScope('Directory.AccessAsUser.All' );
+    //const client = getAuthenticatedClient(accessToken);
+    let getUserGroups
+    try {
+      getUserGroups = await this.getAllGroups(accessToken, userID)
+    } catch(err) {
+      console.log(err); // TypeError: failed to fetch
+    }
+    
+    let planners = []
+
+    
+    await Promise.all(getUserGroups.value.map(
+      async (element) => {
+        if(element.displayName != 'Global Administrator'){
+          try {
+            const getPlanner  = await this.getAllPlanners(accessToken, element.id)
+            if(getPlanner && getPlanner.value.length > 0){
+              //console.log(getPlanner.value)
+              planners.push(getPlanner.value)
+            }
+          } catch(err) {
+            console.log(err); // TypeError: failed to fetch
+          }
+        }
+      }
+    ))
+    return planners
+   
+  },
+
+  searchAllPlanners: async function (accessToken, userID, searchTerm){
+    const planners = await this.getUserPlanners(accessToken, userID)
+    let plannerIDs = []
+    let plannerTasks = []
+
+    planners.forEach(el => el.forEach(ele => plannerIDs.push(ele.id)))
+
+    await Promise.all(plannerIDs.map(
+      async (element) => {
+          try {
+            const getTasks  = await this.getAllTasks(accessToken, element)
+            
+            getTasks.value.forEach(el => {
+              //console.log(el.title)
+              //plannerTasks[el.title] = el.id
+              //plannerTasks.push({[el.title] : el.id})
+              plannerTasks.push(`${el.title}::${el.id}`)
+            })
+          } catch(err) {
+            console.log(err); // TypeError: failed to fetch
+          }
+      }
+    ))
+
+    //find task
+    console.log('Searched for task:')
+    //plannerTasks.filter(el => console.log(el))
+    return plannerTasks.filter( el => el.toLowerCase().includes( searchTerm.toLowerCase() ) )
+  },
   
 }
 
