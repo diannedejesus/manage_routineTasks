@@ -14,15 +14,15 @@ html, body {
   height: 100%;
   width: 100%;
 }
-/* body {
-  background: #FFBE0B; 
+
+body {
+  /* background: #FFBE0B;  */
   font-family: "Space Mono";
   font-weight:400;
-  font-size: 0.8em;
-  color: #aaa;
+  font-size: 0.pem;
+  /* color: #aaa; */
   display:flex;
-  
-} */
+}
 
 input {
   font-family: "Space Mono";
@@ -35,13 +35,13 @@ input {
   padding:0;
 }
 
-/* .container {
-  width: 600px;
+.task_container {
+  width: 300px;
   margin: auto;
   box-shadow: 0 0 2px hsla(0,0%,0%,0.2); 
   border-radius:6px;
   background-color:#f8f8f8;
-} */
+}
 
 @keyframes shake {
   from {left: -2px;}
@@ -50,13 +50,13 @@ input {
 
 @keyframes birth {
   from {height:0;}
-  to   {height: 50px;}
+  to   {height: 40px;}
 }
 
 .task--row {
-  height: 50px;
+  /* height: 50px; */
   padding:0 20px;
-  line-height:50px;
+  line-height:40px;
 }
 
 .task__head {
@@ -130,7 +130,7 @@ input {
   transform: scale(0);
   color: #47D185;
   font-size:1.4em;
-  height:50px;
+  height:40px;
   width:50px;
   border:0;
   background:none;
@@ -149,7 +149,7 @@ input {
 }
 
 .task__add {
-  height:50px;
+  height:40px;
   border:0;
   background:none;
   width:100%;
