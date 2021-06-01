@@ -9,4 +9,6 @@ router.get('/', ensureAuth, plannersCtrlr.getIndex)
 
 router.get('/getTasks', ensureAuth, plannersCtrlr.getTasks)
 
+router.get('/getSingleTask', ensureAuth, plannersCtrlr.getSingleTask)
+
 module.exports = router;

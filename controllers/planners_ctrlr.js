@@ -12,9 +12,8 @@ module.exports = {
         }
 
         let params = {
-            active: { home: true },
-            user: req.user ? req.user.profile : null,
-            planner: userGroups
+            isPlanner: true,
+            items: userGroups
         };
         res.render('calendar', params);
     },
@@ -30,9 +29,29 @@ module.exports = {
         
         console.log(tasks)
         let params = {
-            active: { home: true },
-            user: req.user ? req.user.profile : null,
-            planner: tasks
+            isTask: true,
+            items: tasks
+        };
+        res.render('calendar', params);
+    },
+
+    getSingleTask: async (req, res, next) => {
+        let tasks
+        let title
+        //console.log(Object.keys(req.query))
+        try {
+            tasks = await graph.getDetailedTask(req.user.accessToken, Object.keys(req.query))
+            title = await graph.getTaskTitle(req.user.accessToken, Object.keys(req.query))
+        } catch (error) {
+            console.log(error); // TypeError: failed to fetch
+        }
+
+        console.log(title.title)
+
+        let params = {
+            isSingleTask: true,
+            title: title.title,
+            items: tasks
         };
         res.render('calendar', params);
     }

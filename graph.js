@@ -48,6 +48,26 @@ module.exports = {
       .get();
   },
 
+  getDetailedTask: async function getTasks(accessToken, taskID) {
+    //ensureScope('Directory.AccessAsUser.All' );
+    const client = getAuthenticatedClient(accessToken);
+
+    return await client
+      .api(`planner/tasks/${taskID}/details`)
+      .get();
+  },
+
+  getTaskTitle: async function getTasks(accessToken, taskID) {
+    //ensureScope('Directory.AccessAsUser.All' );
+    const client = getAuthenticatedClient(accessToken);
+
+    return await client
+      .api(`planner/tasks/${taskID}`)
+      .select('title')
+      .get();
+  },
+
+
   getUserPlanners: async function getUserPlanners(accessToken, userID) {
     //ensureScope('Directory.AccessAsUser.All' );
     //const client = getAuthenticatedClient(accessToken);

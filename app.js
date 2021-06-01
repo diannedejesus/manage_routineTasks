@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const session = require('express-session');
 const flash = require('connect-flash');
+const hbs = require('hbs');
 
 require('dotenv').config({path: '.env'})
 const passport = require('passport');
@@ -55,6 +56,11 @@ app.use(function(req, res, next) {
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
+
+//handlebars helpers
+const { checkedOrNot, } = require('./helpers/hbs')
+hbs.registerHelper('checkedOrNot', checkedOrNot);
+
 app.set('view engine', 'hbs');
 
 app.use(logger('dev'));
