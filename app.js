@@ -58,8 +58,9 @@ app.use(function(req, res, next) {
 app.set('views', path.join(__dirname, 'views'));
 
 //handlebars helpers
-const { checkedOrNot, } = require('./helpers/hbs')
+const { checkedOrNot, isRevisionPlanner, } = require('./helpers/hbs')
 hbs.registerHelper('checkedOrNot', checkedOrNot);
+hbs.registerHelper('isRevisionPlanner', isRevisionPlanner);
 
 app.set('view engine', 'hbs');
 

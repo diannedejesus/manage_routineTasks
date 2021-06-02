@@ -11,7 +11,11 @@
   {{#if isPlanner}}
     {{#each items}}
       {{#each this}}
-        <li><a href="/calendar/getTasks?{{this.id}}">{{this.title}}</a></li>
+        {{#if (isRevisionPlanner this.title)}}
+          <li><a href="/calendar/getTasks?{{this.id}}">{{this.title}}</a>::</li>
+        {{else}}
+          <li><a href="/calendar/getTasks?{{this.id}}">{{this.title}}</a></li>
+        {{/if}}
       {{/each}}
     {{/each}}
   {{/if}}

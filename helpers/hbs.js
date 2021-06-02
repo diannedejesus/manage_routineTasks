@@ -2,13 +2,17 @@
 
 module.exports = {
   checkedOrNot: function(isChecked){
-    console.log(isChecked)
     if(isChecked === true){
       return 'checked'
     }else{
       return ''
     }
   },
+  isRevisionPlanner: function(name){
+    if(name.toLowerCase().includes('revision')){
+      return true
+    }
+  }
     // formatDate: function (date, format) {
     //     return moment(date).format(format)
     // },

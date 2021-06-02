@@ -4,16 +4,17 @@ module.exports = {
     getIndex: async (req, res, next) => {
         //console.log(req.user ? req.user.profile : null)
         let userGroups
+        let revisions = []
 
         if(req.user){
             userGroups = await graph.getUserPlanners(req.user.accessToken, req.user.profile.oid)
-            
-            //console.log(await graph.searchAllPlanners(req.user.accessToken, req.user.profile.oid, 'Wa'))
+            console.log(revisions)
         }
 
         let params = {
             isPlanner: true,
-            items: userGroups
+            items: userGroups,
+            //revisions: revision,
         };
         res.render('calendar', params);
     },
@@ -45,8 +46,6 @@ module.exports = {
         } catch (error) {
             console.log(error); // TypeError: failed to fetch
         }
-
-        console.log(title.title)
 
         let params = {
             isSingleTask: true,
