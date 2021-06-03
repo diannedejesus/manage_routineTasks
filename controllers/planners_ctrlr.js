@@ -8,7 +8,9 @@ module.exports = {
 
         if(req.user){
             userGroups = await graph.getUserPlanners(req.user.accessToken, req.user.profile.oid)
-            console.log(revisions)
+            
+            console.log('this: ', userGroups[0][0])
+
         }
 
         let params = {
