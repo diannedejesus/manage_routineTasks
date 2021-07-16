@@ -112,7 +112,7 @@ module.exports = {
     await Promise.all(plannerIDs.map(
       async (plannerInfo) => {
           try {
-            const getTasks  = await this.getAllTasks(accessToken, element.id)
+            const getTasks  = await this.getAllTasks(accessToken, plannerInfo.id)
             
             getTasks.value.forEach(taskInfo => {
               //console.log(el.title)
