@@ -4,13 +4,20 @@ module.exports = {
     getIndex: async (req, res, next) => {
         //console.log(req.user ? req.user.profile : null)
         let userGroups
-        let revisions = []
+        //let revisions = []
 
         if(req.user){
             userGroups = await graph.getUserPlanners(req.user.accessToken, req.user.profile.oid)
             
-            console.log('this: ', userGroups[0][0])
-
+            //console.log('length: ', userGroups)
+            // console.log(userGroups.filter(el => {
+            //     if(el.title){
+            //         return el.title.toLowerCase().includes('revision')
+            //     }
+            // }))
+            // for(let i=userGroups.length; i >= 0; i--){
+                
+            // }
         }
 
         let params = {
@@ -55,5 +62,22 @@ module.exports = {
             items: tasks
         };
         res.render('calendar', params);
+    },
+
+    getSearch: async (req, res, next) => {
+        res.render('searching');
+    },
+
+    startSearch: async (req, res, next) => {
+        
+        searchResults = await graph.searchAllPlanners(req.user.accessToken, req.user.profile.oid, req.body.searchTerm)
+        nickName = req.user.profile._json.preferred_username.split('@')[1].split('.')[0]
+
+        let params = {
+            isSearch: true,
+            searchResults: searchResults,
+            msNick: nickName
+        };
+        res.render('searching', params);
     }
 }

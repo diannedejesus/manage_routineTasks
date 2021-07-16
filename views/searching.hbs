@@ -1,0 +1,17 @@
+<h1 class="mb-3">Planner</h1>
+
+
+<form action="/calendar/startSearch" method='POST'>
+  <label>search:</label>
+  <input type='text' name='searchTerm' placeholder="Enter a search term">
+  <input type='submit' value='search'>     
+</form>
+<ul>
+  {{#if isSearch}}
+    {{#each searchResults}}
+      
+        <li><a href="https://tasks.office.com/{{msNick}}.onmicrosoft.com/en-US/Home/Planner/#/plantaskboard?groupId={{this.group}}&planId={{this.id}}">{{this.title}}</a>::</li>
+     
+    {{/each}}
+  {{/if}}
+</ul>

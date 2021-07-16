@@ -11,4 +11,8 @@ router.get('/getTasks', ensureAuth, plannersCtrlr.getTasks)
 
 router.get('/getSingleTask', ensureAuth, plannersCtrlr.getSingleTask)
 
+router.get('/search', ensureAuth, plannersCtrlr.getSearch)
+
+router.post('/startSearch', ensureAuth, plannersCtrlr.startSearch)
+
 module.exports = router;

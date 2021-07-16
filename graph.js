@@ -82,13 +82,14 @@ module.exports = {
 
     
     await Promise.all(getUserGroups.value.map(
-      async (element) => {
-        if(element.displayName != 'Global Administrator'){
+      async (groupInfo) => {
+       
+        if(groupInfo.displayName != 'Global Administrator'){
           try {
-            const getPlanner  = await this.getAllPlanners(accessToken, element.id)
+            const getPlanner  = await this.getAllPlanners(accessToken, groupInfo.id)
             if(getPlanner && getPlanner.value.length > 0){
               //console.log(getPlanner.value)
-              planners.push(getPlanner.value)
+              planners.push({planner: getPlanner.value, group: groupInfo.id})
             }
           } catch(err) {
             console.log(err); // TypeError: failed to fetch
@@ -102,22 +103,26 @@ module.exports = {
 
   searchAllPlanners: async function (accessToken, userID, searchTerm){
     const planners = await this.getUserPlanners(accessToken, userID)
+    
     let plannerIDs = []
     let plannerTasks = []
 
-    planners.forEach(el => el.forEach(ele => plannerIDs.push(ele.id)))
-
+    planners.forEach(plannerGroup => plannerGroup.planner.forEach(plannerInfo => plannerIDs.push({id: plannerInfo.id, group: plannerGroup.group})))
+    
     await Promise.all(plannerIDs.map(
-      async (element) => {
+      async (plannerInfo) => {
           try {
-            const getTasks  = await this.getAllTasks(accessToken, element)
+            const getTasks  = await this.getAllTasks(accessToken, element.id)
             
-            getTasks.value.forEach(el => {
+            getTasks.value.forEach(taskInfo => {
               //console.log(el.title)
               //plannerTasks[el.title] = el.id
               //plannerTasks.push({[el.title] : el.id})
-              plannerTasks.push(`${el.title}::${el.id}`)
+              //plannerTasks.push(`${el.title}::${el.id}`)
+
+              plannerTasks.push({title: taskInfo.title, id: plannerInfo.id, group: plannerInfo.group})
             })
+            //console.log(plannerTasks)
           } catch(err) {
             console.log(err); // TypeError: failed to fetch
           }
@@ -125,9 +130,9 @@ module.exports = {
     ))
 
     //find task
-    console.log('Searched for task:')
+    console.log('Searched for task')
     //plannerTasks.filter(el => console.log(el))
-    return plannerTasks.filter( el => el.toLowerCase().includes( searchTerm.toLowerCase() ) )
+    return plannerTasks.filter( taskInfo => taskInfo.title.toLowerCase().includes( searchTerm.toLowerCase() ) )
   },
   
 }
