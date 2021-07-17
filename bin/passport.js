@@ -1,13 +1,9 @@
 const OIDCStrategy = require('passport-azure-ad').OIDCStrategy;
+const mongoose = require('mongoose')
 require('dotenv').config();
+const User = require('../models/User')
 
 module.exports = function (passport) {
-  // Configure passport
-
-  // In-memory storage of logged-in users
-  // For demo purposes only, production apps should store
-  // this in a reliable storage
-  let users = {};
 
   
   // Configure OIDC strategy
@@ -34,22 +30,37 @@ module.exports = function (passport) {
       return done(new Error("No OID found in user profile."), null);
     }
 
-    // Save the profile and tokens in user storage
-    users[profile.oid] = { profile, accessToken };
-    return done(null, users[profile.oid]);
+    //TODO: HOW TO STORE ACCESSTOKEN IN SESSION INSTEAD
+      const newUser = {
+        microsoftId: profile.oid,
+        displayName: profile.displayName,
+        accessToken: accessToken
+      }
+
+      try {
+        let user = await User.findOneAndUpdate( { microsoftId: profile.oid, accessToken: accessToken })
+  
+        if (user) {
+          console.log('user found')
+          done(null, user)
+        } else {
+          user = await User.create(newUser)
+          console.log('created user')
+          done(null, user)
+        }
+      } catch (err) {
+        console.error(err)
+      }
   }
 
-  // Passport calls serializeUser and deserializeUser to
-  // manage users
-  passport.serializeUser(function(user, done) {
-    // Use the OID property of the user as a key
-    users[user.profile.oid] = user;
-    done (null, user.profile.oid);
-  });
+  passport.serializeUser((user, done) => {
+    done(null, user._id)
+  })
 
-  passport.deserializeUser(function(id, done) {
-    done(null, users[id]);
-  });
+  passport.deserializeUser((id, done) => {
+    User.findById(id, (err, user) => done(err, user))
+  })
+
 }
 
 

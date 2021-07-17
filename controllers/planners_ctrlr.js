@@ -7,7 +7,7 @@ module.exports = {
         //let revisions = []
 
         if(req.user){
-            userGroups = await graph.getUserPlanners(req.user.accessToken, req.user.profile.oid)
+            userGroups = await graph.getUserPlanners(req.user.accessToken, req.user.microsoftId)
             
             //console.log('length: ', userGroups)
             // console.log(userGroups.filter(el => {
@@ -48,7 +48,7 @@ module.exports = {
     getSingleTask: async (req, res, next) => {
         let tasks
         let title
-        //console.log(Object.keys(req.query))
+
         try {
             tasks = await graph.getDetailedTask(req.user.accessToken, Object.keys(req.query))
             title = await graph.getTaskTitle(req.user.accessToken, Object.keys(req.query))
@@ -65,18 +65,21 @@ module.exports = {
     },
 
     getSearch: async (req, res, next) => {
-        res.render('searching');
+        let params = {
+            active: { home: true },
+            user: req.user ? req.user : null,
+        };
+        res.render('searching', params);
     },
 
     startSearch: async (req, res, next) => {
-        
-        searchResults = await graph.searchAllPlanners(req.user.accessToken, req.user.profile.oid, req.body.searchTerm)
-        nickName = req.user.profile._json.preferred_username.split('@')[1].split('.')[0]
+        searchResults = await graph.searchAllPlanners(req.user.accessToken, req.user.microsoftId, req.body.searchTerm)
 
         let params = {
+            active: { home: true },
+            user: req.user ? req.user : null,
             isSearch: true,
             searchResults: searchResults,
-            msNick: nickName
         };
         res.render('searching', params);
     }

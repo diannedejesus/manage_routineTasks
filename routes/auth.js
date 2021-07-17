@@ -1,4 +1,4 @@
-const graph = require('../graph');
+//const graph = require('../graph');
 const express = require('express');
 const passport = require('passport');
 const router = express.Router();
@@ -6,9 +6,11 @@ const router = express.Router();
 /* GET auth callback. */
 router.get('/signin',
   function  (req, res, next) {
+    //console.log(res)
     passport.authenticate('azuread-openidconnect',
       {
         response: res,
+        //customState: 'my_state',          
         prompt: 'login',
         failureRedirect: '/',
         failureFlash: true
@@ -16,6 +18,7 @@ router.get('/signin',
     )(req,res,next);
   },
   function(req, res) {
+    console.log('Login was called in the Sample');
     res.redirect('/');
   }
 );

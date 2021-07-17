@@ -1,17 +1,22 @@
 const createError = require('http-errors');
 const express = require('express');
+const mongoose = require('mongoose')
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const session = require('express-session');
+const MongoStore = require('connect-mongo')
+const connectDB = require('./config/database')
 const flash = require('connect-flash');
 const hbs = require('hbs');
 
 require('dotenv').config({path: '.env'})
+
 const passport = require('passport');
 // Passport config
 require('./bin/passport')(passport)
 
+connectDB()
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -20,33 +25,27 @@ const authRouter = require('./routes/auth');
 
 const app = express();
 
-// In-memory storage of logged-in users
-  // For demo purposes only, production apps should store
-  // this in a reliable storage
-  //let users = {};
-
 // Session middleware
-// NOTE: Uses default in-memory session store, which is not
-// suitable for production
 app.use(session({
   secret: 'your_secret_value_here',
   resave: false,
   saveUninitialized: false,
-  unset: 'destroy'
+  store: MongoStore.create({ 
+    mongoUrl: process.env.DB_STRING, 
+  }),
+  //unset: 'destroy'
 }));
 
 // Flash middleware
 app.use(flash());
 
-// Set up local vars for template layout
+
 app.use(function(req, res, next) {
 
-  // Read any flashed errors and save
-  // in the response locals
+  // Read any flashed errors and save in the response locals
   res.locals.error = req.flash('error_msg');
 
-  // Check for simple error string and
-  // convert to layout's expected format
+  // Check for simple error string and convert to layout's expected format
   let errs = req.flash('error');
   for (let i in errs){
     res.locals.error.push({message: 'An error occurred', debug: errs[i]});
