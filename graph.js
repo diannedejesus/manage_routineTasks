@@ -1,4 +1,6 @@
 const graph = require('@microsoft/microsoft-graph-client');
+const refreshAccessToken =  require('./bin/refreshToken');
+let timeStamp = Date.now()
 require('isomorphic-fetch');
 
 module.exports = {
@@ -13,7 +15,6 @@ module.exports = {
   },
 
   getAllGroups: async function getMyGroups(accessToken, userID) {
-    //ensureScope('Directory.AccessAsUser.All' );
     const client = getAuthenticatedClient(accessToken);
 
     return await client  
@@ -22,7 +23,6 @@ module.exports = {
   },
 
   getAllPlanners: async function getPlanners(accessToken, groupID) {
-    //ensureScope('Directory.AccessAsUser.All' );
     const client = getAuthenticatedClient(accessToken);
 
     return await client
@@ -31,7 +31,6 @@ module.exports = {
   },
 
   getAllTasks: async function getTasks(accessToken, planID) {
-    //ensureScope('Directory.AccessAsUser.All' );
     const client = getAuthenticatedClient(accessToken);
 
     return await client
@@ -40,7 +39,6 @@ module.exports = {
   },
 
   getSingleTask: async function getTasks(accessToken, taskID) {
-    //ensureScope('Directory.AccessAsUser.All' );
     const client = getAuthenticatedClient(accessToken);
 
     return await client
@@ -49,7 +47,6 @@ module.exports = {
   },
 
   getDetailedTask: async function getTasks(accessToken, taskID) {
-    //ensureScope('Directory.AccessAsUser.All' );
     const client = getAuthenticatedClient(accessToken);
 
     return await client
@@ -58,7 +55,6 @@ module.exports = {
   },
 
   getTaskTitle: async function getTasks(accessToken, taskID) {
-    //ensureScope('Directory.AccessAsUser.All' );
     const client = getAuthenticatedClient(accessToken);
 
     return await client
@@ -69,8 +65,6 @@ module.exports = {
 
 
   getUserPlanners: async function getUserPlanners(accessToken, userID) {
-    //ensureScope('Directory.AccessAsUser.All' );
-    //const client = getAuthenticatedClient(accessToken);
     let getUserGroups
     try {
       getUserGroups = await this.getAllGroups(accessToken, userID)
@@ -139,14 +133,45 @@ module.exports = {
 
 
 function getAuthenticatedClient(accessToken) {
+  const timeElapsed = Math.floor((Date.now() - timeStamp) /1000)
+
+  if(timeElapsed > 3500){
+    verifyAcessToken(client, accessToken)
+  }
   // Initialize Graph client
   const client = graph.Client.init({
-    // Use the provided access token to authenticate
-    // requests
+    // Use the provided access token to authenticate requests
     authProvider: (done) => {
       done(null, accessToken);
     }
   });
+  console.log('getAuthenticatedClient')
+  return client
+}
 
-  return client;
+async function verifyAcessToken(client, accessToken){
+  console.log('verifyAcessToken')
+  try {
+    const user = await client
+      .api('/me')
+      .select('displayName')
+      .get();
+      console.log(user)
+  } catch (error) {
+    if(error.code === 'InvalidAuthenticationToken'){
+      timeStamp = Date.now()
+      getAccessToken()
+    }else{
+      console.log(error); // TypeError: failed to fetch
+    }
+  }
+}
+
+function getAccessToken(accessToken){
+  console.log('getAccessToken')
+
+    refreshAccessToken.getJSON(accessToken, (statusCode, result) => {
+      // I could work with the resulting HTML/JSON here. I could also just return it
+      console.log(`onResult: (${statusCode})\n\n${JSON.stringify(result)}`);
+    });
 }
