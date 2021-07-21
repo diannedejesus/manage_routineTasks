@@ -1,4 +1,5 @@
 const graph = require('../graph')
+const refreshAccessToken =  require('../bin/refreshToken');
 
 module.exports = {
     getIndex: async (req, res, next) => {
@@ -73,8 +74,20 @@ module.exports = {
     },
 
     startSearch: async (req, res, next) => {
-        searchResults = await graph.searchAllPlanners(req.user.accessToken, req.user.microsoftId, req.body.searchTerm)
+        const timeElapsed = Math.floor((Date.now() - req.session.timeStamp) /1000)
 
+        if(timeElapsed > 3500){
+            console.log('timed refresh')
+            refreshAccessToken.getJSON(req.user.accessToken, (statusCode, result) => {
+                // I could work with the resulting HTML/JSON here. I could also just return it
+                console.log(`onResult: (${statusCode})\n\n${JSON.stringify(result)}`);
+              });
+            req.session.timeStamp = Date.now()
+        }
+
+        searchResults = await graph.searchAllPlanners(req.user.accessToken, req.user.microsoftId, req.body.searchTerm)
+        //if not search result the get token try again
+        console.log('searchresult: ', searchResults)
         let params = {
             active: { home: true },
             user: req.user ? req.user : null,

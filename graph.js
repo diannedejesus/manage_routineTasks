@@ -3,64 +3,107 @@ const refreshAccessToken =  require('./bin/refreshToken');
 let timeStamp = Date.now()
 require('isomorphic-fetch');
 
+
 module.exports = {
   getUserDetails: async function(accessToken) {
     const client = getAuthenticatedClient(accessToken);
 
-    const user = await client
+    try {
+      ///api call
+      const user = await client
       .api('/me')
       .select('displayName,mail,mailboxSettings,userPrincipalName')
       .get();
-    return user;
+
+      return user;
+
+    } catch (error) {
+      if(error.code === 'InvalidAuthenticationToken'){
+        //req.session.timeStamp = Date.now() //TODO: can I access session?
+        //getAccessToken(accessToken)
+        console.log('InvalidAuthenticationToken')
+      }else{
+        console.log(error); // TypeError: failed to fetch
+      }
+    }
   },
 
   getAllGroups: async function getMyGroups(accessToken, userID) {
-    const client = getAuthenticatedClient(accessToken);
+    try{
+      const client = getAuthenticatedClient(accessToken);
 
-    return await client  
-      .api(`/users/${userID}/transitiveMemberOf`)
-      .get();
+      return await client  
+        .api(`/users/${userID}/transitiveMemberOf`)
+        .get();
+    } catch (error) {
+        console.log(error); // TypeError: failed to fetch
+    }
   },
 
   getAllPlanners: async function getPlanners(accessToken, groupID) {
-    const client = getAuthenticatedClient(accessToken);
+    try{
+      const client = getAuthenticatedClient(accessToken);
 
-    return await client
-      .api(`/groups/${groupID}/planner/plans`)
-      .get();
+      return await client
+        .api(`/groups/${groupID}/planner/plans`)
+        .get();
+
+    } catch (error) {
+      console.log(error); // TypeError: failed to fetch
+    }
   },
 
   getAllTasks: async function getTasks(accessToken, planID) {
-    const client = getAuthenticatedClient(accessToken);
+    try{
+      const client = getAuthenticatedClient(accessToken);
 
-    return await client
-      .api(`/planner/plans/${planID}/tasks`)
-      .get();
+      return await client
+        .api(`/planner/plans/${planID}/tasks`)
+        .get();
+
+    } catch (error) {
+      console.log(error); // TypeError: failed to fetch
+    }
   },
 
   getSingleTask: async function getTasks(accessToken, taskID) {
-    const client = getAuthenticatedClient(accessToken);
+    try{
+      const client = getAuthenticatedClient(accessToken);
 
-    return await client
-      .api(`planner/tasks/${taskID}`)
-      .get();
+      return await client
+        .api(`planner/tasks/${taskID}`)
+        .get();
+
+    } catch (error) {
+      console.log(error); // TypeError: failed to fetch
+    }
   },
 
   getDetailedTask: async function getTasks(accessToken, taskID) {
-    const client = getAuthenticatedClient(accessToken);
+    try{
+      const client = getAuthenticatedClient(accessToken);
 
-    return await client
-      .api(`planner/tasks/${taskID}/details`)
-      .get();
+      return await client
+        .api(`planner/tasks/${taskID}/details`)
+        .get();
+
+    } catch (error) {
+      console.log(error); // TypeError: failed to fetch
+    }
   },
 
   getTaskTitle: async function getTasks(accessToken, taskID) {
-    const client = getAuthenticatedClient(accessToken);
+    try{
+      const client = getAuthenticatedClient(accessToken);
 
-    return await client
-      .api(`planner/tasks/${taskID}`)
-      .select('title')
-      .get();
+      return await client
+        .api(`planner/tasks/${taskID}`)
+        .select('title')
+        .get();
+
+    } catch (error) {
+      console.log(error); // TypeError: failed to fetch
+    }
   },
 
 
@@ -133,11 +176,6 @@ module.exports = {
 
 
 function getAuthenticatedClient(accessToken) {
-  const timeElapsed = Math.floor((Date.now() - timeStamp) /1000)
-
-  if(timeElapsed > 3500){
-    verifyAcessToken(client, accessToken)
-  }
   // Initialize Graph client
   const client = graph.Client.init({
     // Use the provided access token to authenticate requests

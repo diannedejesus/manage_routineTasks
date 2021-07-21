@@ -35,6 +35,7 @@ router.post('/callback',
   },
   async function(req, res) {
     console.log('We received a return from AzureAD.');
+    req.session.timeStamp = Date.now()
     res.redirect('/');
   }
 );

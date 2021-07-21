@@ -1,4 +1,3 @@
-//const graph = require('../graph')
 
 module.exports = {
     getIndex: async (req, res, next) => {
