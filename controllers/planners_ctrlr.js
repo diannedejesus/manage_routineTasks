@@ -79,18 +79,21 @@ console.log(timeElapsed)
         if(timeElapsed > 3500){
             console.log('timed refresh')
             try{
-                //req.user.accessToken = await refreshAccessToken.getJSON(req.user.accessToken)
-                console.log(await refreshAccessToken.getJSON(req.user.accessToken))
+                let tokenInfo = await refreshAccessToken.getJSON(req.session.refreshToken)
+                req.session.accessToken = tokenInfo.access_token
+                req.session.refreshToken = tokenInfo.refresh_token
+
+                req.session.save(function(err){
+                    console.log('saved:', err)
+                    req.session.timeStamp = Date.now()
+                });
             }catch (error){
                 console.log(error)
-            }  //TODO check if works ///have the new token plugged in after using the refresh
-
-            //console.log(req.user.accessToken)
-            //req.session.timeStamp = Date.now()
+            }
         } 
 
-        console.log(req.user.accessToken ? true : false)
-        searchResults = await graph.searchAllPlanners(req.user.accessToken, req.user.microsoftId, req.body.searchTerm)
+        console.log(req.session)
+        searchResults = await graph.searchAllPlanners(req.session.accessToken, req.user.microsoftId, req.body.searchTerm)
         //if not search result the get token try again
         console.log('searchresult: ', searchResults)
         let params = {

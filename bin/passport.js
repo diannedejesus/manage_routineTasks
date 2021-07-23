@@ -31,21 +31,24 @@ module.exports = function (passport) {
       const newUser = {
         microsoftId: profile.oid,
         displayName: profile.displayName,
-        accessToken: accessToken,
-        refreshToken: refreshToken
       }
 
       try {
-        let user = await User.findOneAndUpdate( { microsoftId: profile.oid, accessToken: accessToken, refreshToken: refreshToken })
-  
+        let user = await User.findOne( { microsoftId: profile.oid })
+
         if (user) {
           console.log('user found')
+          user.accessToken = accessToken
+          user.refreshToken = refreshToken
           done(null, user)
         } else {
           user = await User.create(newUser)
+          user.accessToken = accessToken
+          user.refreshToken = refreshToken
           console.log('created user')
           done(null, user)
         }
+
       } catch (err) {
         console.error(err)
       }

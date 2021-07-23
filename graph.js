@@ -7,6 +7,7 @@ require('isomorphic-fetch');
 
 module.exports = {
   getUserDetails: async function(accessToken) {
+    console.log('getUserDetails')
     const client = getAuthenticatedClient(accessToken);
 
     try {
@@ -30,6 +31,7 @@ module.exports = {
   },
 
   getAllGroups: async function getMyGroups(accessToken, userID) {
+    console.log('getAllGroups')
     try{
       const client = getAuthenticatedClient(accessToken);
 
@@ -42,6 +44,7 @@ module.exports = {
   },
 
   getAllPlanners: async function getPlanners(accessToken, groupID) {
+    console.log('getAllPlanners')
     try{
       const client = getAuthenticatedClient(accessToken);
 
