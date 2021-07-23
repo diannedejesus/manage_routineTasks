@@ -2,7 +2,8 @@ const graph = require('@microsoft/microsoft-graph-client');
 const refreshAccessToken =  require('./bin/refreshToken');
 let timeStamp = Date.now()
 require('isomorphic-fetch');
-
+//TODO add error catching for if the timed refresh token is not activated before trying to access the 
+//api
 
 module.exports = {
   getUserDetails: async function(accessToken) {
@@ -54,6 +55,7 @@ module.exports = {
   },
 
   getAllTasks: async function getTasks(accessToken, planID) {
+    console.log('getAllTasks')
     try{
       const client = getAuthenticatedClient(accessToken);
 
@@ -67,6 +69,7 @@ module.exports = {
   },
 
   getSingleTask: async function getTasks(accessToken, taskID) {
+    console.log('getSingleTask')
     try{
       const client = getAuthenticatedClient(accessToken);
 
@@ -80,6 +83,7 @@ module.exports = {
   },
 
   getDetailedTask: async function getTasks(accessToken, taskID) {
+    console.log('getDetailedTask')
     try{
       const client = getAuthenticatedClient(accessToken);
 
@@ -93,6 +97,7 @@ module.exports = {
   },
 
   getTaskTitle: async function getTasks(accessToken, taskID) {
+    console.log('getTaskTitle')
     try{
       const client = getAuthenticatedClient(accessToken);
 
@@ -108,6 +113,7 @@ module.exports = {
 
 
   getUserPlanners: async function getUserPlanners(accessToken, userID) {
+    console.log('getUserPlanner')
     let getUserGroups
     try {
       getUserGroups = await this.getAllGroups(accessToken, userID)
@@ -139,6 +145,7 @@ module.exports = {
   },
 
   searchAllPlanners: async function (accessToken, userID, searchTerm){
+    console.log('searchAllPlanners')
     const planners = await this.getUserPlanners(accessToken, userID)
     
     let plannerIDs = []
@@ -152,14 +159,9 @@ module.exports = {
             const getTasks  = await this.getAllTasks(accessToken, plannerInfo.id)
             
             getTasks.value.forEach(taskInfo => {
-              //console.log(el.title)
-              //plannerTasks[el.title] = el.id
-              //plannerTasks.push({[el.title] : el.id})
-              //plannerTasks.push(`${el.title}::${el.id}`)
-
               plannerTasks.push({title: taskInfo.title, id: plannerInfo.id, group: plannerInfo.group})
             })
-            //console.log(plannerTasks)
+
           } catch(err) {
             console.log(err); // TypeError: failed to fetch
           }
@@ -168,7 +170,7 @@ module.exports = {
 
     //find task
     console.log('Searched for task')
-    //plannerTasks.filter(el => console.log(el))
+
     return plannerTasks.filter( taskInfo => taskInfo.title.toLowerCase().includes( searchTerm.toLowerCase() ) )
   },
   
@@ -187,23 +189,23 @@ function getAuthenticatedClient(accessToken) {
   return client
 }
 
-async function verifyAcessToken(client, accessToken){
-  console.log('verifyAcessToken')
-  try {
-    const user = await client
-      .api('/me')
-      .select('displayName')
-      .get();
-      console.log(user)
-  } catch (error) {
-    if(error.code === 'InvalidAuthenticationToken'){
-      timeStamp = Date.now()
-      getAccessToken()
-    }else{
-      console.log(error); // TypeError: failed to fetch
-    }
-  }
-}
+// async function verifyAcessToken(client, accessToken){
+//   console.log('verifyAcessToken')
+//   try {
+//     const user = await client
+//       .api('/me')
+//       .select('displayName')
+//       .get();
+//       console.log(user)
+//   } catch (error) {
+//     if(error.code === 'InvalidAuthenticationToken'){
+//       timeStamp = Date.now()
+//       getAccessToken()
+//     }else{
+//       console.log(error); // TypeError: failed to fetch
+//     }
+//   }
+// }
 
 function getAccessToken(accessToken){
   console.log('getAccessToken')

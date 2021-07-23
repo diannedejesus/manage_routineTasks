@@ -75,16 +75,21 @@ module.exports = {
 
     startSearch: async (req, res, next) => {
         const timeElapsed = Math.floor((Date.now() - req.session.timeStamp) /1000)
-
+console.log(timeElapsed)
         if(timeElapsed > 3500){
             console.log('timed refresh')
-            refreshAccessToken.getJSON(req.user.accessToken, (statusCode, result) => {
-                // I could work with the resulting HTML/JSON here. I could also just return it
-                console.log(`onResult: (${statusCode})\n\n${JSON.stringify(result)}`);
-              });
-            req.session.timeStamp = Date.now()
-        }
+            try{
+                //req.user.accessToken = await refreshAccessToken.getJSON(req.user.accessToken)
+                console.log(await refreshAccessToken.getJSON(req.user.accessToken))
+            }catch (error){
+                console.log(error)
+            }  //TODO check if works ///have the new token plugged in after using the refresh
 
+            //console.log(req.user.accessToken)
+            //req.session.timeStamp = Date.now()
+        } 
+
+        console.log(req.user.accessToken ? true : false)
         searchResults = await graph.searchAllPlanners(req.user.accessToken, req.user.microsoftId, req.body.searchTerm)
         //if not search result the get token try again
         console.log('searchresult: ', searchResults)
