@@ -21,7 +21,6 @@ module.exports = {
 
     } catch (error) {
       if(error.code === 'InvalidAuthenticationToken'){
-        //req.session.timeStamp = Date.now() //TODO: can I access session?
         //getAccessToken(accessToken)
         console.log('InvalidAuthenticationToken')
       }else{

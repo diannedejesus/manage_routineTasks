@@ -2,6 +2,8 @@ body {
   padding-top: 4.5rem;
 }
 
+input, button{border: none;}
+
 .alert-pre {
   word-wrap: break-word;
   word-break: break-all;
@@ -21,7 +23,7 @@ body {
   font-weight:400;
   font-size: 0.pem;
   /* color: #aaa; */
-  display:flex;
+  display: flex;
 }
 
 /* input {
@@ -166,13 +168,14 @@ body {
 
 .searchTerm {
   width: 100%;
-  border: 2px solid black;
-  border-right: none;
+  border-bottom: 1px solid #aae7fd;
+  /* border-right: none; */
   padding: 5px;
   height: 80px;
-  border-radius: 5px 0 0 5px;
+  border-radius: 5px 0 0 0;
   outline: none;
-  color: #9DBFAF;
+  background-color: #13a4d9;
+  color: white;
   font-size: 2rem;
 }
 
@@ -183,21 +186,81 @@ body {
 .searchButton {
   width: 120px;
   height: 80px;
-  border: 2px solid black;
-  border-left: none;
-  background: #13a4d9;;
+  border-bottom: 1px solid #aae7fd;
+  /* border-left: none; */
+  background: #13a4d9;
   text-align: center;
   color: black;
-  border-radius: 0 5px 5px 0;
+  border-radius: 0 5px 0 0;
   cursor: pointer;
   font-size: 20px;
 }
 
 /*Resize the wrap to see the search bar change!*/
 .wrap{
-  width: 50%;
-  background-color: #a8a8a8;
-  padding: 30px;
-  border: 1px solid black;
-  border-radius: 3px;
+  display: block;
+  width: 60%;
+  margin: 0 auto;
+  /* background-color:  */
+  /* padding: 30px; */
+  /* border: 1px solid black; */
+  /* border-radius: 3px; */
+}
+
+main ul{
+  margin: 0 auto;
+  width: 60%;
+  /* text-align: center; */
+  list-style: none;
+}
+
+main li{
+  border-bottom: 1px solid #aae7fd;
+  /* border-top: none; */
+  padding: 15px 5px;
+  visibility: hidden;
+  background-color: #13a4d9;
+}
+
+main li {
+  animation: anim 2s linear 0s;
+  animation-fill-mode: forwards;  
+  /* transform-origin: 50% 100%; */
+  transform-origin: top center;
+  backface-visibility: hidden;
+}
+
+main li:nth-child(1) { animation-delay: 0s; }
+
+main li:nth-child(2) { animation-delay: 2s; }
+
+main li:nth-child(3) { animation-delay: 4s; }
+
+main li:nth-child(4) { animation-delay: 6s; }
+
+main li:nth-child(5) { animation-delay: 8s; }
+
+main li:nth-child(6) { animation-delay: 10s; }
+
+main li:nth-child(7) { animation-delay: 12s; }
+
+main li:nth-child(8) { animation-delay: 14s; }
+
+@keyframes anim {
+  from {
+    transform: rotateX(-180deg);
+    visibility: hidden;
+  }
+  to {
+    transform: rotateX(0deg);
+    visibility: visible;
+  }
+}
+
+main li a{
+  color: white;
+}
+
+main li:last-child{
+  border-radius: 0 0 5px 5px;
 }

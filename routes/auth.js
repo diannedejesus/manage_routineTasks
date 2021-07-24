@@ -32,14 +32,13 @@ router.post('/callback',
   },
   async function(req, res) {
     console.log('We received a return from AzureAD.');
-    //console.log(res.req.user)
 
     req.session.timeStamp = Date.now()
     req.session.accessToken = res.req.user.accessToken
     req.session.refreshToken = res.req.user.refreshToken
-    //console.log(res)
+
     req.session.save(function(err) {
-      //!err ? console.log('session saved') : console.log(err)
+      err ? console.log('session saved') : console.log(err)
     })
 
     res.redirect('/');

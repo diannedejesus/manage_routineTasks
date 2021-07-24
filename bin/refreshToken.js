@@ -1,7 +1,6 @@
 const http = require('http');
 const https = require('https');
-var qs = require('querystring');
-const User = require('../models/User')
+let qs = require('querystring');
 
 /**
  * getJSON:  RESTful GET request returning JSON object(s)
@@ -10,7 +9,6 @@ const User = require('../models/User')
  */
 
 module.exports.getJSON = async (refreshToken) => {
-    //const userInfo = await User.findOne( { accessToken: accessToken })
 
     return new Promise((resolve, reject) => {
         console.log('Start::PromiseHTTPS')
@@ -41,10 +39,8 @@ module.exports.getJSON = async (refreshToken) => {
             });
     
             res.on("end", async function (chunk) {
+
                 let body = JSON.parse(Buffer.concat(chunks))
-    
-                //await User.findOneAndUpdate( { microsoftId: userInfo.microsoftId, accessToken: body.access_token, refreshToken: body.refresh_token })
-                //console.log(body)
                 resolve(body)
             });
     

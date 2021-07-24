@@ -27,7 +27,6 @@ module.exports = function (passport) {
       return done(new Error("No OID found in user profile."), null);
     }
 
-    //TODO: HOW TO STORE ACCESSTOKEN IN SESSION INSTEAD
       const newUser = {
         microsoftId: profile.oid,
         displayName: profile.displayName,
@@ -38,13 +37,17 @@ module.exports = function (passport) {
 
         if (user) {
           console.log('user found')
+
           user.accessToken = accessToken
           user.refreshToken = refreshToken
+
           done(null, user)
         } else {
           user = await User.create(newUser)
+
           user.accessToken = accessToken
           user.refreshToken = refreshToken
+          
           console.log('created user')
           done(null, user)
         }
