@@ -33,11 +33,12 @@ router.post('/callback',
   async function(req, res) {
     console.log('We received a return from AzureAD.');
 
-    req.session.timeStamp = Date.now()
-    req.session.accessToken = res.req.user.accessToken
-    req.session.refreshToken = res.req.user.refreshToken
+    //create some custom session variables for handling the refreshing of the access token
+    req.session.timeStamp = Date.now() //time stamp is for checking whether we need to update the access token, since this is when we first login the user we initialize this variable
+    req.session.accessToken = res.req.user.accessToken //store current access token recieved by the login, to the current session
+    req.session.refreshToken = res.req.user.refreshToken //store the current refresh token recieved by the login, to the current session
 
-    req.session.save(function(err) {
+    req.session.save(function(err) { //save the session so the added data is saved to the cookie and our session data in the database
       err ? console.log('session saved') : console.log(err)
     })
 
