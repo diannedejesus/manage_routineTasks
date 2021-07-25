@@ -15,7 +15,7 @@ router.get('/signin',
     )(req,res,next);
   },
   function(req, res) {
-    console.log('Login was called in the Sample');
+    console.log('Signin was called');
     res.redirect('/');
   }
 );

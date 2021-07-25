@@ -1,5 +1,9 @@
 body {
+  display: flex;
   padding-top: 4.5rem;
+  font-family: "Space Mono";
+  font-weight:400;
+  font-size: 0.pem;
 }
 
 input, button{border: none;}
@@ -17,20 +21,6 @@ html, body {
   width: 100%;
 }
 
-body {
-  /* background: #FFBE0B;  */
-  font-family: "Space Mono";
-  font-weight:400;
-  font-size: 0.pem;
-  /* color: #aaa; */
-  display: flex;
-}
-
-/* input {
-  font-family: "Space Mono";
-  font-size:1em;
-  outline:none;
-} */
 
 * {
   margin:0;
@@ -169,7 +159,6 @@ body {
 .searchTerm {
   width: 100%;
   border-bottom: 1px solid #aae7fd;
-  /* border-right: none; */
   padding: 5px;
   height: 80px;
   border-radius: 5px 0 0 0;
@@ -187,7 +176,6 @@ body {
   width: 120px;
   height: 80px;
   border-bottom: 1px solid #aae7fd;
-  /* border-left: none; */
   background: #13a4d9;
   text-align: center;
   color: black;
@@ -201,22 +189,16 @@ body {
   display: block;
   width: 60%;
   margin: 0 auto;
-  /* background-color:  */
-  /* padding: 30px; */
-  /* border: 1px solid black; */
-  /* border-radius: 3px; */
 }
 
 main ul{
   margin: 0 auto;
   width: 60%;
-  /* text-align: center; */
   list-style: none;
 }
 
 main li{
   border-bottom: 1px solid #aae7fd;
-  /* border-top: none; */
   padding: 15px 5px;
   visibility: hidden;
   background-color: #13a4d9;
@@ -225,11 +207,11 @@ main li{
 main li {
   animation: anim 2s linear 0s;
   animation-fill-mode: forwards;  
-  /* transform-origin: 50% 100%; */
   transform-origin: top center;
   backface-visibility: hidden;
 }
 
+/* ::TODO:: Implement JS code to implement this part since amount will be variable */
 main li:nth-child(1) { animation-delay: 0s; }
 
 main li:nth-child(2) { animation-delay: 2s; }
@@ -259,6 +241,11 @@ main li:nth-child(8) { animation-delay: 14s; }
 
 main li a{
   color: white;
+}
+
+main li a:hover{
+  color: white;
+  text-decoration: none;
 }
 
 main li:last-child{

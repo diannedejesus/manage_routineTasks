@@ -190,30 +190,3 @@ function getAuthenticatedClient(accessToken) {
   console.log('getAuthenticatedClient')
   return client
 }
-
-// async function verifyAcessToken(client, accessToken){
-//   console.log('verifyAcessToken')
-//   try {
-//     const user = await client
-//       .api('/me')
-//       .select('displayName')
-//       .get();
-//       console.log(user)
-//   } catch (error) {
-//     if(error.code === 'InvalidAuthenticationToken'){
-//       timeStamp = Date.now()
-//       getAccessToken()
-//     }else{
-//       console.log(error); // TypeError: failed to fetch
-//     }
-//   }
-// }
-
-function getAccessToken(accessToken){
-  console.log('getAccessToken')
-
-    refreshAccessToken.getJSON(accessToken, (statusCode, result) => {
-      // I could work with the resulting HTML/JSON here. I could also just return it
-      console.log(`onResult: (${statusCode})\n\n${JSON.stringify(result)}`);
-    });
-}

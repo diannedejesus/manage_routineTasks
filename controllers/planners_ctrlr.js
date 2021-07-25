@@ -74,28 +74,8 @@ module.exports = {
     },
 
     startSearch: async (req, res, next) => {
-        const timeElapsed = Math.floor((Date.now() - req.session.timeStamp) /1000)
-        //console.log('Elapsed Time: ', timeElapsed)
-        if(timeElapsed > 3500){
-            console.log('timed token refresh')
-            try{
-                let tokenInfo = await refreshAccessToken.getJSON(req.session.refreshToken)
-                req.session.accessToken = tokenInfo.access_token
-                req.session.refreshToken = tokenInfo.refresh_token
-
-                req.session.save(function(err){
-                    console.log('saved:', err)
-                    req.session.timeStamp = Date.now()
-                });
-            }catch (error){
-                console.log(error)
-            }
-        } 
-
-        //console.log(req.session)
         searchResults = await graph.searchAllPlanners(req.session.accessToken, req.user.microsoftId, req.body.searchTerm)
-        //if not search result the get token try again
-        console.log('searchresult: ', searchResults)
+
         let params = {
             active: { home: true },
             user: req.user ? req.user : null,
