@@ -3,8 +3,16 @@ const graph = require('../graph')
 module.exports = {
     getUser: async (req, res, next) => {
         //console.log(`response data: ${util.inspect(res, {showHidden: false, depth: null})}`)
-        let userInfo = await graph.getUserDetails(req.user.accessToken)
-        //console.log(userInfo)
-        res.send(`Hi ${userInfo.displayName}, your registered email is ${userInfo.mail}`);
+        
+        let userInfo = await graph.getUserDetails(req.session.accessToken)
+        console.log(userInfo)
+
+        let params = {
+            active: { home: true },
+            user: req.user ? req.user : null,
+            info: userInfo,
+        };
+
+        res.render('profile', params);
     }
 }

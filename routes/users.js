@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-//const graph = require('../graph')
 const userCtrlr = require('../controllers/users_ctrlr')
 const { ensureAuth, ensureGuest } = require('../middleware/auth')
 

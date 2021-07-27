@@ -1,8 +1,17 @@
+.clearfix:after {
+  content: ".";
+  display: block;
+  clear: both;
+  visibility: hidden;
+  line-height: 0;
+  height: 0;
+}
+
 body {
   display: flex;
   padding-top: 4.5rem;
   font-family: "Space Mono";
-  font-weight:400;
+  font-weight: 400;
   font-size: 0.pem;
 }
 
@@ -27,227 +36,34 @@ html, body {
   padding:0;
 }
 
-.task_container {
-  width: 300px;
-  margin: auto;
-  box-shadow: 0 0 2px hsla(0,0%,0%,0.2); 
-  border-radius:6px;
-  background-color:#f8f8f8;
+/* ---------------------------------------------------------- */
+/* ---------------------------------------------------------- */
+/* ---------------------------------------------------------- */
+
+.userInfo{
+  width: 340px;
+  height: 100px;
+  background-color: #64C7CC;
+  float: left;
+  margin-top: 40px;
+  margin-left: 180px;
+  text-align: right;
+  padding: 15px;
 }
 
-@keyframes shake {
-  from {left: -2px;}
-  to   {left: 2px;}
-}
-
-@keyframes birth {
-  from {height:0;}
-  to   {height: 40px;}
-}
-
-.task--row {
-  /* height: 50px; */
-  padding:0 20px;
-  line-height:40px;
-}
-
-.task__head {
-  background: #FE5F55;
-  color: white;
-  font-weight:bold;
-  border-top-left-radius:6px;
-  border-top-right-radius:6px;
-}
-
-.task__footer {
-  transition: all 0.2s cubic-bezier(.7,.2,.17,1);
-  background: #1CCAD8;
-  border-bottom-left-radius:6px;
-  border-bottom-right-radius:6px;
-}
-
-.task__footer:hover {background-color:#54E0EA}
-
-.task {
-  overflow:hidden;
-  transition: all 0.2s 0.2s cubic-bezier(.7,.2,.17,1);
-  position:relative;
-  display:block;
-}
-
-.task__check {
+.userPhoto{
   position: absolute;
-  left: -9999px; 
-  z-index: -1;
-}
-
-.task__field {
-  transition: background-size 0.8s 0.2s cubic-bezier(.7,.2,.17,1),
-              background-color 0.2s cubic-bezier(.7,.2,.17,1),
-              height 0.2s 1s cubic-bezier(.7,.2,.17,1);
-  position:relative;
-  background-color:#f8f8f8;
-  border-top: 1px solid #eee;
-  background-image: linear-gradient(to right, #FE5F55, red);
-  background-size: 0 2px;
-  background-repeat:no-repeat;
-  background-position: left bottom;
-}
-
-.task__field:hover {background-color:white;}
-
-.task:first-child .task__field {
-  border-top:none;
-}
-
-.task--new:last-child {
-  animation: birth 0.3s cubic-bezier(.7,.2,.17,1) 1;
-}
-
-.task__field.shaking {
-  animation: shake 0.1s 0.1s infinite ease-in-out;
-  background-size: 100% 2px;
-}
-
-.task__check:checked + .task__field {
-  color: #47D185;
-}
-
-.task__important {
-  transition: all 0.3s cubic-bezier(.09,.66,.36,1.8);
-  opacity:0;
-  position: absolute;
-  right:0;
-  top:0;
-  transform: scale(0);
-  color: #47D185;
-  font-size:1.4em;
-  height:40px;
-  width:50px;
-  border:0;
-  background:none;
-}
-
-.task__check:checked + .task__field > .task__important {
-  opacity: 0.5;
-  transform: scale(1);
-}
-
-.task__field.delete {
-  transition: all 0.2s cubic-bezier(.7,.2,.17,1);
-  transform: scale(1.5, 2);
-  height:0;
-  opacity:0;
-}
-
-.task__add {
-  height:40px;
-  border:0;
-  background:none;
-  width:100%;
-  color:white;
-}
-
-
-/* ------------------------------------ */
-.search {
-  width: 100%;
-  position: relative;
-  display: flex;
-}
-
-.searchTerm {
-  width: 100%;
-  border-bottom: 1px solid #aae7fd;
-  padding: 5px;
-  height: 80px;
-  border-radius: 5px 0 0 0;
-  outline: none;
-  background-color: #13a4d9;
-  color: white;
-  font-size: 2rem;
-}
-
-.searchTerm:focus{
-  color: black;
-}
-
-.searchButton {
-  width: 120px;
-  height: 80px;
-  border-bottom: 1px solid #aae7fd;
-  background: #13a4d9;
+  background-color: #64C7CC;
+  border-radius: 15px;
   text-align: center;
-  color: black;
-  border-radius: 0 5px 0 0;
-  cursor: pointer;
-  font-size: 20px;
+  font-size: 130px;
+  width: 190px;
+  height: 190px;
+  line-height: 210px;
 }
 
-/*Resize the wrap to see the search bar change!*/
-.wrap{
-  display: block;
-  width: 60%;
-  margin: 0 auto;
-}
-
-main ul{
-  margin: 0 auto;
-  width: 60%;
-  list-style: none;
-}
-
-main li{
-  border-bottom: 1px solid #aae7fd;
-  padding: 15px 5px;
-  visibility: hidden;
-  background-color: #13a4d9;
-}
-
-main li {
-  animation: anim 2s linear 0s;
-  animation-fill-mode: forwards;  
-  transform-origin: top center;
-  backface-visibility: hidden;
-}
-
-/* ::TODO:: Implement JS code to implement this part since amount will be variable */
-main li:nth-child(1) { animation-delay: 0s; }
-
-main li:nth-child(2) { animation-delay: 2s; }
-
-main li:nth-child(3) { animation-delay: 4s; }
-
-main li:nth-child(4) { animation-delay: 6s; }
-
-main li:nth-child(5) { animation-delay: 8s; }
-
-main li:nth-child(6) { animation-delay: 10s; }
-
-main li:nth-child(7) { animation-delay: 12s; }
-
-main li:nth-child(8) { animation-delay: 14s; }
-
-@keyframes anim {
-  from {
-    transform: rotateX(-180deg);
-    visibility: hidden;
-  }
-  to {
-    transform: rotateX(0deg);
-    visibility: visible;
-  }
-}
-
-main li a{
-  color: white;
-}
-
-main li a:hover{
-  color: white;
-  text-decoration: none;
-}
-
-main li:last-child{
-  border-radius: 0 0 5px 5px;
+.userPhoto img{
+  width: 250px;
+  border: 8px solid #64C7CC;
+  border-radius: 15px;
 }

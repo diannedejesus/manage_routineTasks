@@ -1,0 +1,19 @@
+<div class="jumbotron clearfix">
+  <h1>Profile</h1>
+  <p class="lead">This sample shows how to retrieve data from the Microsoft Graph API from this Node.js project</p>
+  {{#if user}}
+
+    <div class="userPhoto">
+      {{#if photo}}
+        <img src="{{ user.avatar }}" />
+      {{else}}
+        <i class="far fa-user-circle fa-lg rounded-circle"></i>
+      {{/if}}
+    </div>
+    <div class='userInfo'>
+      <h2 style="margin-bottom: 0;">{{ user.displayName }}</h2>
+      <p style="color:white; font-style:italic">{{ info.mail }}</p>
+  {{else}}
+    <a href="/auth/signin" class="btn btn-primary btn-large">Click here to sign in</a>
+  {{/if}}
+</div>

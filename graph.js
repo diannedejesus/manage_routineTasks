@@ -29,158 +29,176 @@ module.exports = {
     }
   },
 
-  getAllGroups: async function getMyGroups(accessToken, userID) {
-    console.log('getAllGroups')
-    try{
-      const client = getAuthenticatedClient(accessToken);
+  // getUserPhoto: async function(accessToken) {
+  //   console.log('getUserDetails')
+  //   const client = getAuthenticatedClient(accessToken);
 
-      return await client  
-        .api(`/users/${userID}/transitiveMemberOf`)
-        .get();
-    } catch (error) {
-        console.log(error); // TypeError: failed to fetch
-    }
-  },
+  //   try {
+  //     ///api call
+  //     const user = await client
+  //       .api('/users/21da6ced-885b-4e7d-a832-6dc50d62bf49/photo/')
+  //       .get();
 
-  getAllPlanners: async function getPlanners(accessToken, groupID) {
-    console.log('getAllPlanners')
-    try{
-      const client = getAuthenticatedClient(accessToken);
+  //       console.log(user)
+  //     return user;
 
-      return await client
-        .api(`/groups/${groupID}/planner/plans`)
-        .get();
+  //   } catch (error) {
+  //     console.log(error); // TypeError: failed to fetch
+  //   }
+  // },
 
-    } catch (error) {
-      console.log(error); // TypeError: failed to fetch
-    }
-  },
+  // getAllGroups: async function getMyGroups(accessToken, userID) {
+  //   console.log('getAllGroups')
+  //   try{
+  //     const client = getAuthenticatedClient(accessToken);
 
-  getAllTasks: async function getTasks(accessToken, planID) {
-    console.log('getAllTasks')
-    try{
-      const client = getAuthenticatedClient(accessToken);
+  //     return await client  
+  //       .api(`/users/${userID}/transitiveMemberOf`)
+  //       .get();
+  //   } catch (error) {
+  //       console.log(error); // TypeError: failed to fetch
+  //   }
+  // },
 
-      return await client
-        .api(`/planner/plans/${planID}/tasks`)
-        .get();
+  // getAllPlanners: async function getPlanners(accessToken, groupID) {
+  //   console.log('getAllPlanners')
+  //   try{
+  //     const client = getAuthenticatedClient(accessToken);
 
-    } catch (error) {
-      console.log(error); // TypeError: failed to fetch
-    }
-  },
+  //     return await client
+  //       .api(`/groups/${groupID}/planner/plans`)
+  //       .get();
 
-  getSingleTask: async function getTasks(accessToken, taskID) {
-    console.log('getSingleTask')
-    try{
-      const client = getAuthenticatedClient(accessToken);
+  //   } catch (error) {
+  //     console.log(error); // TypeError: failed to fetch
+  //   }
+  // },
 
-      return await client
-        .api(`planner/tasks/${taskID}`)
-        .get();
+  // getAllTasks: async function getTasks(accessToken, planID) {
+  //   console.log('getAllTasks')
+  //   try{
+  //     const client = getAuthenticatedClient(accessToken);
 
-    } catch (error) {
-      console.log(error); // TypeError: failed to fetch
-    }
-  },
+  //     return await client
+  //       .api(`/planner/plans/${planID}/tasks`)
+  //       .get();
 
-  getDetailedTask: async function getTasks(accessToken, taskID) {
-    console.log('getDetailedTask')
-    try{
-      const client = getAuthenticatedClient(accessToken);
+  //   } catch (error) {
+  //     console.log(error); // TypeError: failed to fetch
+  //   }
+  // },
 
-      return await client
-        .api(`planner/tasks/${taskID}/details`)
-        .get();
+  // getSingleTask: async function getTasks(accessToken, taskID) {
+  //   console.log('getSingleTask')
+  //   try{
+  //     const client = getAuthenticatedClient(accessToken);
 
-    } catch (error) {
-      console.log(error); // TypeError: failed to fetch
-    }
-  },
+  //     return await client
+  //       .api(`planner/tasks/${taskID}`)
+  //       .get();
 
-  getTaskTitle: async function getTasks(accessToken, taskID) {
-    console.log('getTaskTitle')
-    try{
-      const client = getAuthenticatedClient(accessToken);
+  //   } catch (error) {
+  //     console.log(error); // TypeError: failed to fetch
+  //   }
+  // },
 
-      return await client
-        .api(`planner/tasks/${taskID}`)
-        .select('title')
-        .get();
+  // getDetailedTask: async function getTasks(accessToken, taskID) {
+  //   console.log('getDetailedTask')
+  //   try{
+  //     const client = getAuthenticatedClient(accessToken);
 
-    } catch (error) {
-      console.log(error); // TypeError: failed to fetch
-    }
-  },
+  //     return await client
+  //       .api(`planner/tasks/${taskID}/details`)
+  //       .get();
+
+  //   } catch (error) {
+  //     console.log(error); // TypeError: failed to fetch
+  //   }
+  // },
+
+  // getTaskTitle: async function getTasks(accessToken, taskID) {
+  //   console.log('getTaskTitle')
+  //   try{
+  //     const client = getAuthenticatedClient(accessToken);
+
+  //     return await client
+  //       .api(`planner/tasks/${taskID}`)
+  //       .select('title')
+  //       .get();
+
+  //   } catch (error) {
+  //     console.log(error); // TypeError: failed to fetch
+  //   }
+  // },
 
 
-  getUserPlanners: async function getUserPlanners(accessToken, userID) {
-    console.log('getUserPlanner')
-    let getUserGroups
-    try {
-      getUserGroups = await this.getAllGroups(accessToken, userID)
-    } catch(err) {
-      console.log(err); // TypeError: failed to fetch
-    }
+  // getUserPlanners: async function getUserPlanners(accessToken, userID) {
+  //   console.log('getUserPlanner')
+  //   let getUserGroups
+  //   try {
+  //     getUserGroups = await this.getAllGroups(accessToken, userID)
+  //   } catch(err) {
+  //     console.log(err); // TypeError: failed to fetch
+  //   }
     
-    let planners = []
+  //   let planners = []
 
     
-    await Promise.all(getUserGroups.value.map(
-      async (groupInfo) => {
+  //   await Promise.all(getUserGroups.value.map(
+  //     async (groupInfo) => {
        
-        if(groupInfo.displayName != 'Global Administrator'){
-          try {
-            const getPlanner  = await this.getAllPlanners(accessToken, groupInfo.id)
-            if(getPlanner && getPlanner.value.length > 0){
-              //console.log(getPlanner.value)
-              planners.push({planner: getPlanner.value, group: groupInfo.id})
-            }
-          } catch(err) {
-            console.log(err); // TypeError: failed to fetch
-          }
-        }
-      }
-    ))
-    return planners
+  //       if(groupInfo.displayName != 'Global Administrator'){
+  //         try {
+  //           const getPlanner  = await this.getAllPlanners(accessToken, groupInfo.id)
+  //           if(getPlanner && getPlanner.value.length > 0){
+  //             //console.log(getPlanner.value)
+  //             planners.push({planner: getPlanner.value, group: groupInfo.id})
+  //           }
+  //         } catch(err) {
+  //           console.log(err); // TypeError: failed to fetch
+  //         }
+  //       }
+  //     }
+  //   ))
+  //   return planners
    
-  },
+  // },
 
-  searchAllPlanners: async function (accessToken, userID, searchTerm){
-    console.log('searchAllPlanners')
-    const planners = await this.getUserPlanners(accessToken, userID)
+  // searchAllPlanners: async function (accessToken, userID, searchTerm){
+  //   console.log('searchAllPlanners')
+  //   const planners = await this.getUserPlanners(accessToken, userID)
     
-    let plannerIDs = []
-    let plannerTasks = []
+  //   let plannerIDs = []
+  //   let plannerTasks = []
 
-    planners.forEach(plannerGroup => plannerGroup.planner.forEach(plannerInfo => plannerIDs.push({id: plannerInfo.id, group: plannerGroup.group})))
+  //   planners.forEach(plannerGroup => plannerGroup.planner.forEach(plannerInfo => plannerIDs.push({id: plannerInfo.id, group: plannerGroup.group})))
     
-    await Promise.all(plannerIDs.map(
-      async (plannerInfo) => {
-          try {
-            const getTasks  = await this.getAllTasks(accessToken, plannerInfo.id)
+  //   await Promise.all(plannerIDs.map(
+  //     async (plannerInfo) => {
+  //         try {
+  //           const getTasks  = await this.getAllTasks(accessToken, plannerInfo.id)
             
-            getTasks.value.forEach(taskInfo => {
-              plannerTasks.push({title: taskInfo.title, id: plannerInfo.id, group: plannerInfo.group})
-            })
+  //           getTasks.value.forEach(taskInfo => {
+  //             plannerTasks.push({title: taskInfo.title, id: plannerInfo.id, group: plannerInfo.group})
+  //           })
 
-          } catch(err) {
-            console.log(err); // TypeError: failed to fetch
-          }
-      }
-    ))
+  //         } catch(err) {
+  //           console.log(err); // TypeError: failed to fetch
+  //         }
+  //     }
+  //   ))
 
-    //find task
-    console.log('Searched for task')
+  //   //find task
+  //   console.log('Searched for task')
 
-    return plannerTasks.filter( taskInfo => taskInfo.title.toLowerCase().includes( searchTerm.toLowerCase() ) )
-  },
+  //   return plannerTasks.filter( taskInfo => taskInfo.title.toLowerCase().includes( searchTerm.toLowerCase() ) )
+  // },
   
 }
 
 
-function getAuthenticatedClient(accessToken) {
-  // Initialize Graph client
+function getAuthenticatedClient(accessToken) { // this function initializes the Graph client used to retrieve data from the msgraph api
+  
   const client = graph.Client.init({
     // Use the provided access token to authenticate requests
     authProvider: (done) => {
