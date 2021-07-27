@@ -5,7 +5,6 @@ module.exports = {
         //console.log(`response data: ${util.inspect(res, {showHidden: false, depth: null})}`)
         
         let userInfo = await graph.getUserDetails(req.session.accessToken)
-        console.log(userInfo)
 
         let params = {
             active: { home: true },
