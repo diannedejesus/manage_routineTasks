@@ -8,8 +8,9 @@ module.exports = {
         //let revisions = []
 
         if(req.user){
-            userGroups = await graph.getUserPlanners(req.user.accessToken, req.user.microsoftId)
+            userGroups = await graph.getUserPlanners(req.session.accessToken, req.user.microsoftId)
             
+            userGroups.forEach(element => console.log(element.planner))
             //console.log('length: ', userGroups)
             // console.log(userGroups.filter(el => {
             //     if(el.title){
@@ -22,18 +23,20 @@ module.exports = {
         }
 
         let params = {
+            active: { home: true },
+            user: req.user ? req.user : null,
             isPlanner: true,
             items: userGroups,
             //revisions: revision,
         };
-        res.render('calendar', params);
+        res.render('planner', params);
     },
 
     getTasks: async (req, res, next)=> {
         let tasks
         //console.log(Object.keys(req.query))
         try {
-            tasks = await graph.getAllTasks(req.user.accessToken, Object.keys(req.query))
+            tasks = await graph.getAllTasks(req.session.accessToken, Object.keys(req.query))
         } catch (error) {
             console.log(error); // TypeError: failed to fetch
         }
@@ -43,7 +46,7 @@ module.exports = {
             isTask: true,
             items: tasks
         };
-        res.render('calendar', params);
+        res.render('planner', params);
     },
 
     getSingleTask: async (req, res, next) => {
@@ -51,8 +54,8 @@ module.exports = {
         let title
 
         try {
-            tasks = await graph.getDetailedTask(req.user.accessToken, Object.keys(req.query))
-            title = await graph.getTaskTitle(req.user.accessToken, Object.keys(req.query))
+            tasks = await graph.getDetailedTask(req.session.accessToken, Object.keys(req.query))
+            title = await graph.getTaskTitle(req.session.accessToken, Object.keys(req.query))
         } catch (error) {
             console.log(error); // TypeError: failed to fetch
         }
@@ -62,7 +65,7 @@ module.exports = {
             title: title.title,
             items: tasks
         };
-        res.render('calendar', params);
+        res.render('planner', params);
     },
 
     getSearch: async (req, res, next) => {

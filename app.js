@@ -6,20 +6,21 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')
-const connectDB = require('./config/database')
+const connectDB = require('./bin/database')
 const flash = require('connect-flash');
 const hbs = require('hbs');
+const passport = require('passport');
 
 require('dotenv').config({path: '.env'})
 
-const passport = require('passport');
+
 // Passport config
 require('./bin/passport')(passport)
 
 connectDB()
 
+//declare route variables
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
 const plannersRouter = require('./routes/planners');
 const authRouter = require('./routes/auth');
 
@@ -73,10 +74,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 app.use(passport.session());
 
+//routes
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
-app.use('/users', usersRouter);
-app.use('/calendar', plannersRouter);
+app.use('/planner', plannersRouter);
 
 
 // catch 404 and forward to error handler

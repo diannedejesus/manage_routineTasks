@@ -153,15 +153,19 @@ module.exports = {
     let plannerIDs = []
     let plannerTasks = []
 
-    planners.forEach(plannerGroup => plannerGroup.planner.forEach(plannerInfo => plannerIDs.push({id: plannerInfo.id, group: plannerGroup.group})))
+    planners.forEach(plannerGroup => {
+      plannerGroup.planner.forEach(plannerInfo => {
+        return plannerIDs.push({id: plannerInfo.id, group: plannerGroup.group, name: plannerInfo.title})
+      })
+    })
     
     await Promise.all(plannerIDs.map(
       async (plannerInfo) => {
           try {
             const getTasks  = await this.getAllTasks(accessToken, plannerInfo.id)
-            
+
             getTasks.value.forEach(taskInfo => {
-              plannerTasks.push({title: taskInfo.title, id: plannerInfo.id, group: plannerInfo.group})
+              plannerTasks.push({title: taskInfo.title, id: plannerInfo.id, group: plannerInfo.group, planName: plannerInfo.name})
             })
 
           } catch(err) {
