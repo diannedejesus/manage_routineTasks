@@ -133,7 +133,7 @@ module.exports = {
           try {
             const getPlanner  = await this.getAllPlanners(accessToken, groupInfo.id)
             if(getPlanner && getPlanner.value.length > 0){
-              //console.log(getPlanner.value)
+
               planners.push({planner: getPlanner.value, group: groupInfo.id})
             }
           } catch(err) {
