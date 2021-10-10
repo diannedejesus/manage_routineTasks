@@ -133,7 +133,6 @@ module.exports = {
           try {
             const getPlanner  = await this.getAllPlanners(accessToken, groupInfo.id)
             if(getPlanner && getPlanner.value.length > 0){
-
               planners.push({planner: getPlanner.value, group: groupInfo.id})
             }
           } catch(err) {
@@ -178,6 +177,72 @@ module.exports = {
     console.log('Searched for task')
 
     return plannerTasks.filter( taskInfo => taskInfo.title.toLowerCase().includes( searchTerm.toLowerCase() ) )
+  },
+
+  createBucket: async function getMyGroups(accessToken, bucketName, planId) {
+    console.log('createBucket')
+    try{
+      const client = getAuthenticatedClient(accessToken);
+      const plannerBucket = {name: bucketName,planId: planId,orderHint: ' !'};
+
+      return await client.api('/planner/buckets')
+        .post(plannerBucket);
+     
+    } catch (error) {
+        console.log(error); // TypeError: failed to fetch
+    }
+  },
+
+  createTask: async function getMyGroups(accessToken, title, planId, bucketId, assignments = {}) {
+    console.log('createTask')
+    try{
+      const client = getAuthenticatedClient(accessToken);
+     
+      const plannerTask = {planId: planId, bucketId: bucketId, title: title,assignments: assignments};
+
+      return await client.api('/planner/tasks')
+        .post(plannerTask);
+     
+     
+    } catch (error) {
+        console.log(error); // TypeError: failed to fetch
+    }
+  },
+
+  editTask: async function getMyGroups(accessToken, taskId) {
+    console.log('createTask')
+    try{
+      const client = getAuthenticatedClient(accessToken);
+     
+      const plannerTask = {
+        // 'Body': {
+        //  ' If-Match': 'W/"JzEtVGFzayAgQEBAQEBAQEBAQEBAQEBARCc="',
+        // },
+        title: 'Updated task title 2'
+      };
+
+      return await client.api(`/planner/tasks/${taskId}`)
+      .update(plannerTask);
+     
+     
+    } catch (error) {
+        console.log(error); // TypeError: failed to fetch
+    }
+  },
+
+//Calendar--------------------------------------------------------------------------
+
+  getEvents: async function getCalendarEvents(accessToken, userId){
+    console.log('getEvents')
+    try{
+      const client = getAuthenticatedClient(accessToken);
+
+      return await client.api(`/me/calendarview?startdatetime=2021-08-19T21:20:29.145Z&enddatetime=2021-08-26T21:20:29.145Z`)
+        .get();
+     
+    } catch (error) {
+        console.log(error); // TypeError: failed to fetch
+    }
   },
   
 }

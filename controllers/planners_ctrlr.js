@@ -43,6 +43,8 @@ module.exports = {
         
         console.log(tasks)
         let params = {
+            active: { home: true },
+            user: req.user ? req.user : null,
             isTask: true,
             items: tasks
         };
@@ -61,6 +63,8 @@ module.exports = {
         }
 
         let params = {
+            active: { home: true },
+            user: req.user ? req.user : null,
             isSingleTask: true,
             title: title.title,
             items: tasks
@@ -86,5 +90,47 @@ module.exports = {
             searchResults: searchResults,
         };
         res.render('searching', params);
+    },
+
+    template: async (req, res, next) => {
+        //create bucket //createBucket
+        
+        let bucket = {
+            name: 'test bucket',
+            planID: 'jXSASZtwKE2Qjdij0LzsqmUABw8y',
+        }
+        
+        //let bucketCreated = await graph.createBucket(req.session.accessToken, bucket.name, bucket.planID)
+        //bucketCreated.id
+        // console.log(bucketCreated)
+        //create task
+        let task = {
+            title: 'API Test task',
+            planID: 'jXSASZtwKE2Qjdij0LzsqmUABw8y',
+            //startDate: '',
+            //dueDate: '',
+            //notes: '',
+            //checklist: '',
+            assignments: {},
+            bucketID: '62zkPjL_YEugcYi4XxcokWUAJ6_r',
+        }
+
+        // let taskCreated = await graph.createTask(req.session.accessToken, task.title, task.planID, task.bucketID, task.assignments)
+        // console.log(taskCreated)
+
+        let calendarEvents = await graph.getEvents(req.session.accessToken)
+        console.log(calendarEvents)
+
+        // let editTask = await graph.createTask(req.session.accessToken, 'F_NaMexuskqZGo8Egr8Ww2UABma9')
+        // console.log(editTask)
+        // searchResults = await graph.searchAllPlanners(req.session.accessToken, req.user.microsoftId, req.body.searchTerm)
+
+        // let params = {
+        //     active: { home: true },
+        //     user: req.user ? req.user : null,
+        //     isSearch: true,
+        //     searchResults: searchResults,
+        // };
+        // res.render('searching', params);
     }
 }

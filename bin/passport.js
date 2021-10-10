@@ -23,6 +23,7 @@ module.exports = function (passport) {
   // Callback function called once the sign-in is complete
   // and an access token has been obtained
   async function signInComplete(iss, sub, profile, accessToken, refreshToken, params, done) {
+    console.log(profile)
     if (!profile.oid) {
       return done(new Error("No OID found in user profile."), null);
     }
