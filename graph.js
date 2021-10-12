@@ -183,7 +183,11 @@ module.exports = {
     console.log('createBucket')
     try{
       const client = getAuthenticatedClient(accessToken);
-      const plannerBucket = {name: bucketName,planId: planId,orderHint: ' !'};
+      const plannerBucket = {
+        name: bucketName,
+        planId: planId,
+        orderHint: ' !'
+      };
 
       return await client.api('/planner/buckets')
         .post(plannerBucket);
@@ -198,7 +202,12 @@ module.exports = {
     try{
       const client = getAuthenticatedClient(accessToken);
      
-      const plannerTask = {planId: planId, bucketId: bucketId, title: title,assignments: assignments};
+      const plannerTask = {
+        planId: planId, 
+        bucketId: bucketId, 
+        title: title,
+        assignments: assignments,
+      };
 
       return await client.api('/planner/tasks')
         .post(plannerTask);
@@ -210,7 +219,7 @@ module.exports = {
   },
 
   editTask: async function getMyGroups(accessToken, taskId) {
-    console.log('createTask')
+    console.log('editTask')
     try{
       const client = getAuthenticatedClient(accessToken);
      
@@ -227,6 +236,54 @@ module.exports = {
      
     } catch (error) {
         console.log(error); // TypeError: failed to fetch
+    }
+  },
+
+  createPlan: async function getMyGroups(accessToken, groupId, planTitle) {
+    console.log('createPlan') //doesn't work
+    try{
+      const client = getAuthenticatedClient(accessToken);
+     
+      const plannerTask = {
+        owner: groupId,
+        title: planTitle,
+      };
+
+      return await client.api('/planner/plans')
+      .post(plannerTask);
+     
+     
+    } catch (error) {
+        console.log(error); // TypeError: failed to fetch
+    }
+  },
+
+  updateDetailedTask: async function getTasks(accessToken, taskID, currentEtag, checklistNames) {
+    console.log('getDetailedTask')
+    try{
+      const client = getAuthenticatedClient(accessToken);
+      let checklistItems = {checklist: {}}
+      let num = 0
+
+      for (names of checklistNames){
+        checklistItems.checklist[`95e27074-6c4a-447a-aa24-9d718a0b86f${num}`] = {
+            "@odata.type": "microsoft.graph.plannerChecklistItem",
+            "title": names,
+            "isChecked": false
+        }
+        num++
+      }
+
+      const plannerTask = checklistItems
+      
+      
+      return await client
+        .api(`planner/tasks/${taskID}/details`)
+        .headers({ 'If-Match': currentEtag })
+        .update(plannerTask);
+
+    } catch (error) {
+      console.log(error); //TypeError: failed to fetch
     }
   },
 

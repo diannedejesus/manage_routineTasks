@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Node.js Graph Tutorial</title>
+    <title>MS Planner - Integration</title>
 
     <link rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
@@ -16,7 +16,7 @@
   <body>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
       <div class="container">
-        <a href="/" class="navbar-brand">Graph Application Example</a>
+        <a href="/" class="navbar-brand">Graph Intergration - Templates & Search</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
           aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -29,6 +29,9 @@
             {{#if user}}
               <li class="nav-item" data-turbolinks="false">
                 <a href="/planner" class="nav-link{{#if active.calendar}} active{{/if}}">Planners</a>
+              </li>
+              <li class="nav-item" data-turbolinks="false">
+                <a href="/planner/template" class="nav-link{{#if active.calendar}} active{{/if}}">Templates</a>
               </li>
                <li class="nav-item" data-turbolinks="false">
                 <a href="/planner/search" class="nav-link{{#if active.calendar}} active{{/if}}">Search</a>

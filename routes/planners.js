@@ -14,6 +14,8 @@ router.get('/search', ensureAuth, plannersCtrlr.getSearch)
 
 router.post('/startSearch', ensureAuth, plannersCtrlr.startSearch)
 
-router.get('/template', ensureAuth, plannersCtrlr.template)
+router.get('/template', ensureAuth, plannersCtrlr.getTemplate)
+
+router.get('/createTemplate', ensureAuth, plannersCtrlr.createTemplate)
 
 module.exports = router;

@@ -12,9 +12,7 @@
 <ul>
   {{#if isSearch}}
     {{#each searchResults}}
-      
-        <li><a href="https://tasks.office.com/.onmicrosoft.com/en-US/Home/Planner/#/plantaskboard?groupId={{this.group}}&planId={{this.id}}">{{this.title}} >> Planner: {{this.planName}} </a></li>
-     
+      <li><a href="https://tasks.office.com/.onmicrosoft.com/en-US/Home/Planner/#/plantaskboard?groupId={{this.group}}&planId={{this.id}}" target="_blank">{{this.title}} >> Planner: {{this.planName}}</a></li>
     {{/each}}
   {{/if}}
 </ul>

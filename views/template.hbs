@@ -1,0 +1,11 @@
+<p>Choose the group to add the the template plan to:</p>
+
+<ul>
+  {{#if isPlanner}}
+    {{#each items.value}} 
+      <li><a href="/planner/createTemplate?{{this.id}}">{{this.displayName}}</a></li>
+    {{/each}}
+  {{else if isCreated}}
+    <li><p>The template was created</p></li>
+  {{/if}}
+</ul>
