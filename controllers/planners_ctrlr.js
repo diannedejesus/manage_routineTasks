@@ -3,51 +3,43 @@ const refreshAccessToken =  require('../bin/refreshToken');
 
 module.exports = {
     getIndex: async (req, res, next) => {
-        //console.log(req.user ? req.user.profile : null)
-        let userGroups
-        //let revisions = []
+        let userPlans
 
         if(req.user){
-            userGroups = await graph.getUserPlanners(req.session.accessToken, req.user.microsoftId)
-            
-            userGroups.forEach(element => console.log(element.planner))
-            //console.log('length: ', userGroups)
-            // console.log(userGroups.filter(el => {
-            //     if(el.title){
-            //         return el.title.toLowerCase().includes('revision')
-            //     }
-            // }))
-            // for(let i=userGroups.length; i >= 0; i--){
-                
-            // }
+            try {
+                userPlans = await graph.getUserPlanners(req.session.accessToken, req.user.microsoftId)
+            } catch (error) {
+                console.log(error); // TypeError: failed to fetch
+            }
         }
 
-        let params = {
+        const params = {
             active: { home: true },
             user: req.user ? req.user : null,
-            isPlanner: true,
-            items: userGroups,
-            //revisions: revision,
+            isPlanner: userPlans ? true : false,
+            items: userPlans,
         };
+
         res.render('planner', params);
     },
 
     getTasks: async (req, res, next)=> {
         let tasks
-        //console.log(Object.keys(req.query))
+
         try {
-            tasks = await graph.getAllTasks(req.session.accessToken, Object.keys(req.query))
+           tasks = await graph.getAllTasks(req.session.accessToken, Object.keys(req.query))
+           console.log(tasks)
         } catch (error) {
             console.log(error); // TypeError: failed to fetch
         }
         
-        console.log(tasks)
         let params = {
             active: { home: true },
             user: req.user ? req.user : null,
-            isTask: true,
-            items: tasks
+            isTask: tasks ? true : false,
+            items: tasks,
         };
+
         res.render('planner', params);
     },
 
@@ -95,20 +87,12 @@ module.exports = {
     getTemplate: async (req, res, next) => {
         let userGroups
 
-
         if(req.user){
-            userGroups = await graph.getAllGroups(req.session.accessToken, req.user.microsoftId)
-            //console.log(userGroups)
-            //userGroups.forEach(element => console.log(element.planner))
-            //console.log('length: ', userGroups)
-            // console.log(userGroups.filter(el => {
-            //     if(el.title){
-            //         return el.title.toLowerCase().includes('revision')
-            //     }
-            // }))
-            // for(let i=userGroups.length; i >= 0; i--){
-                
-            // }
+            try {
+                userGroups = await graph.getAllGroups(req.session.accessToken, req.user.microsoftId)
+            } catch (error) {
+                console.log(error); // TypeError: failed to fetch
+            }
         }
 
         let params = {
@@ -122,9 +106,9 @@ module.exports = {
 
     createTemplate: async (req, res, next) => {
         //Need to specify the group first use like searchterm
-        const planName = 'Revision Mes'
+        const planName = 'Plan Name'
         const bucketName = 'Current Tasks'
-        const taskName = 'Test task'
+        const taskName = 'Task Name'
         const checklistNames = ['Form Booklet', 'Form Low Income', 'Civil status', 'Form System Permision', 'Water certification', 'Electricity certification']
         
         //create a plan --- accessToken, groupId, planTitle
