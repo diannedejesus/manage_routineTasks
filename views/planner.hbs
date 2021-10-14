@@ -1,5 +1,6 @@
  {{#if isPlanner}}
     <h1 class="mb-3">Your Plans</h1>
+    <p class='subtitle'>Plans from the groups you belong to.</p>
     <p>Select a plan to see its task list</p>
  {{/if}}
 
@@ -21,6 +22,7 @@
       {{/each}}
     {{/each}}
   {{/if}}
+
   {{#if isPlanner}}
     {{#each items}}
       {{#each this.planner}}
@@ -32,6 +34,7 @@
       {{/each}}
     {{/each}}
   {{/if}}
+
   {{#if isSingleTask}}
   <div class="task_container">
     <div class="task__head task--row">
@@ -50,4 +53,5 @@
     </form>
   </div>
   {{/if}}
+  
 </ul>

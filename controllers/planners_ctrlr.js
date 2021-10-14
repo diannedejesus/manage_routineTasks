@@ -9,7 +9,7 @@ module.exports = {
             try {
                 userPlans = await graph.getUserPlanners(req.session.accessToken, req.user.microsoftId)
             } catch (error) {
-                console.log(error); // TypeError: failed to fetch
+                console.log(error);
             }
         }
 
@@ -30,7 +30,7 @@ module.exports = {
            tasks = await graph.getAllTasks(req.session.accessToken, Object.keys(req.query))
            console.log(tasks)
         } catch (error) {
-            console.log(error); // TypeError: failed to fetch
+            console.log(error);
         }
         
         let params = {
@@ -51,7 +51,7 @@ module.exports = {
             tasks = await graph.getDetailedTask(req.session.accessToken, Object.keys(req.query))
             title = await graph.getTaskTitle(req.session.accessToken, Object.keys(req.query))
         } catch (error) {
-            console.log(error); // TypeError: failed to fetch
+            console.log(error);
         }
 
         let params = {
@@ -91,7 +91,7 @@ module.exports = {
             try {
                 userGroups = await graph.getAllGroups(req.session.accessToken, req.user.microsoftId)
             } catch (error) {
-                console.log(error); // TypeError: failed to fetch
+                console.log(error);
             }
         }
 
