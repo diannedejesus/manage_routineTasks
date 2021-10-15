@@ -107,24 +107,40 @@ module.exports = {
     createTemplate: async (req, res, next) => {
         //Need to specify the group first use like searchterm
         const planName = 'Plan Name'
-        const bucketName = 'Current Tasks'
-        const taskName = 'Task Name'
-        const checklistNames = ['Form Booklet', 'Form Low Income', 'Civil status', 'Form System Permision', 'Water certification', 'Electricity certification']
-        
+        const packetBucket = 'Packet'
+        let taskList = req.body.nameList
+        const taskName = ' - Packet'
+        const packetChecklist = ['Form Booklet', 'Form Low Income', 'Civil status', 'Form System Permision', 'Water certification', 'Electricity certification']
+        console.log(req)
         //create a plan --- accessToken, groupId, planTitle
-        const createdPlan = await graph.createPlan(req.session.accessToken, Object.keys(req.query)[0], planName)
+        const createdPlan = await graph.createPlan(req.session.accessToken, req.body.groupId, planName)
         
         //create buckets --- accessToken, bucketName, planId
-        const createdBucket = await graph.createBucket(req.session.accessToken, bucketName, createdPlan.id)
-        
-        //create task --- accessToken, title, planId, bucketId, assignments = {}
-        const createdTask = await graph.createTask(req.session.accessToken, taskName, createdPlan.id, createdBucket.id)
-        
-        //getDetailedTask: getTasks(accessToken, taskID)
-        const createdTaskDetails =  await graph.getDetailedTask(req.session.accessToken, createdTask.id)
+        const createdBucket = await graph.createBucket(req.session.accessToken, packetBucket, createdPlan.id)
 
-        //update task to add checklist --- accessToken, taskID
-        const updatedTask = await graph.updateDetailedTask(req.session.accessToken, createdTask.id, createdTaskDetails['@odata.etag'], checklistNames)
+        taskList = taskList.split(',')
+        taskList = taskList.foreach(el => el.trim())
+        
+        //tasklist
+        for(items of taskList){
+            //create task --- accessToken, title, planId, bucketId, assignments = {}
+            let createdTask = await graph.createTask(req.session.accessToken, items + taskName, createdPlan.id, createdBucket.id)
+        
+            //getDetailedTask: getTasks(accessToken, taskID)
+            let createdTaskDetails =  await graph.getDetailedTask(req.session.accessToken, createdTask.id)
+
+            //update task to add checklist --- accessToken, taskID
+            let updatedTask = await graph.updateDetailedTask(req.session.accessToken, createdTask.id, createdTaskDetails['@odata.etag'], packetChecklist)
+        }
+
+        // //create task --- accessToken, title, planId, bucketId, assignments = {}
+        // const createdTask = await graph.createTask(req.session.accessToken, taskName, createdPlan.id, createdBucket.id)
+        
+        // //getDetailedTask: getTasks(accessToken, taskID)
+        // const createdTaskDetails =  await graph.getDetailedTask(req.session.accessToken, createdTask.id)
+
+        // //update task to add checklist --- accessToken, taskID
+        // const updatedTask = await graph.updateDetailedTask(req.session.accessToken, createdTask.id, createdTaskDetails['@odata.etag'], packetChecklist)
         
         let params = {
             active: { home: true },
