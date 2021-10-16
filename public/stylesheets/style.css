@@ -198,7 +198,7 @@ main ul{
 }
 
 main li{
-  border-bottom: 1px solid #aae7fd;
+  border: 1px solid #aae7fd;
   padding: 15px 5px;
   visibility: hidden;
   background-color: #13a4d9;

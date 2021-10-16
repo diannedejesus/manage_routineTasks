@@ -40,7 +40,8 @@ module.exports = {
             items: tasks,
         };
 
-        res.render('planner', params);
+        res.json( tasks )
+        //res.render('planner', params);
     },
 
     getSingleTask: async (req, res, next) => {

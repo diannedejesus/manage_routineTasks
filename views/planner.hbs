@@ -1,3 +1,5 @@
+ {{!-- page title --}}
+
  {{#if isPlanner}}
     <h1 class="mb-3">Your Plans</h1>
     <p class='subtitle'>Plans from the groups you belong to.</p>
@@ -14,7 +16,18 @@
     <p>Click the back button to go back or use the menu</p>
  {{/if}}
 
+{{!-- page boby --}}
+
 <ul>
+  {{#if isPlanner}}
+    {{#each items}}
+      {{#each this.planner}}
+      {{!-- href="/planner/getTasks?{{this.id}}" --}}
+          <li><a data-id='{{this.id}}' class='plannerLink'>{{this.title}}</a></li>
+      {{/each}}
+    {{/each}}
+  {{/if}}
+
   {{#if isTask}}
     {{#each items}}
       {{#each this}}
@@ -23,17 +36,6 @@
     {{/each}}
   {{/if}}
 
-  {{#if isPlanner}}
-    {{#each items}}
-      {{#each this.planner}}
-        {{#if (isRevisionPlanner this.title)}}
-          <li><a href="/planner/getTasks?{{this.id}}">{{this.title}}</a></li>
-        {{else}}
-          <li><a href="/planner/getTasks?{{this.id}}">{{this.title}}</a></li>
-        {{/if}}
-      {{/each}}
-    {{/each}}
-  {{/if}}
 
   {{#if isSingleTask}}
   <div class="task_container">
@@ -53,5 +55,5 @@
     </form>
   </div>
   {{/if}}
-  
+
 </ul>
