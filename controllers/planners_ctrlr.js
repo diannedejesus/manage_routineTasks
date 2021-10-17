@@ -62,7 +62,9 @@ module.exports = {
             title: title.title,
             items: tasks
         };
-        res.render('planner', params);
+
+        res.json( tasks )
+        //res.render('planner', params);
     },
 
     getSearch: async (req, res, next) => {

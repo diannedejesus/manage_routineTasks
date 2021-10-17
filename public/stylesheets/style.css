@@ -193,18 +193,43 @@ html, body {
 
 main ul{
   margin: 0 auto;
-  width: 60%;
+  width: 50%;
   list-style: none;
 }
 
+main ul ul{
+  width: 100%;
+}
+
 main li{
+  /* border: 1px solid black; */
+  padding: 0;
+}
+
+main li a{
+  display: inline-block;
   border: 1px solid #aae7fd;
   padding: 15px 5px;
+  width: 100%;
   visibility: hidden;
   background-color: #13a4d9;
 }
 
-main li {
+main li ul li a{
+  border: 1px solid #fdf7aa;
+  background-color: #d6d913;
+}
+
+main li ul li div{
+  border: 1px solid #fdd2aa;
+  background-color: #d98d13;
+  float: right;
+  width: 400px;
+  height: 300px;
+  margin-right: -400px;
+}
+
+main li a{
   animation: anim 1s linear 0s;
   animation-fill-mode: forwards;  
   transform-origin: top center;
@@ -239,6 +264,10 @@ main li:nth-child(8) { animation-delay: 7s; } */
   }
 }
 
+main li:last-child a{
+  border-radius: 0 0 5px 5px;
+}
+
 main li a{
   color: white;
 }
@@ -246,8 +275,4 @@ main li a{
 main li a:hover{
   color: white;
   text-decoration: none;
-}
-
-main li:last-child{
-  border-radius: 0 0 5px 5px;
 }
