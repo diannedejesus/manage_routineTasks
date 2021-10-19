@@ -57,30 +57,35 @@ async function getDetails(event){
             const data = await results.json()
             
              const newdiv = document.createElement("div")
+             const descriptionH3 = document.createElement("h3")
+             const checklistH3 = document.createElement("h3")
              const newP = document.createElement('p')
+             const newul = document.createElement('ul')
+
+             descriptionH3.appendChild(document.createTextNode('Description'))
+             checklistH3.appendChild(document.createTextNode('Checklist'))
              newP.appendChild(document.createTextNode(data.description))
+
+             newdiv.appendChild(descriptionH3)
              newdiv.appendChild(newP)
+             newdiv.appendChild(checklistH3)
+
              for(item in data.checklist){
                 let newInput = document.createElement("input")
+                let newli = document.createElement('li')
                 newInput.setAttribute('type', 'checkbox')
-                newdiv.appendChild(newInput)
-                newdiv.appendChild(document.createTextNode(data.checklist[item].title))
+                
+                console.log(item)
+                if(data.checklist[item].isChecked){newInput.setAttribute('checked', '')}
+                newInput.setAttribute('disabled', '')
+                newli.appendChild(newInput)
+                newli.appendChild(document.createTextNode(data.checklist[item].title))
+                newul.appendChild(newli)
              }
-            // const newli = []
-    
-            // for(items of data.value){
-            //     //console.log(items.title)
-            //     let newListItem = document.createElement("li")
-            //     let newLink = document.createElement("a")
-            //     newLink.appendChild(document.createTextNode(items.title))
-            //     newListItem.appendChild(newLink)
-            //     newli.push(newListItem)
-            // }
-            // for(items of newli){
-            //     newUl.appendChild(items)
-            // }
+
+            newdiv.appendChild(newul)
             event.target.parentNode.appendChild(newdiv)
-            console.log(data.checklist)
+            //console.log(data.checklist)
         } catch (error) {
             console.log(error)
         }
