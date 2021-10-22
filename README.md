@@ -1,26 +1,26 @@
-<h1 align="center"><project-name></h1>
+<h1 align="center">Not Projects, Routines</h1>
 
-<p align="center"><project-description></p>
+<p align="center">Make templates for your MS Planners and fill them will data.</p>
 
 ## Links
 
-- [Repo](https://github.com/Rohit19060/<project-name> "<project-name> Repo")
+- [Repo](https://github.com/diannedejesus/manage_routineTasks "Not Projects, Routines Repo")
 
-- [Live](<Homepage url> "Live View")
+- [Live](<Homepage url> "Live View") - Not Yet Live
 
-- [Bugs](https://github.com/Rohit19060/<project-name>/issues "Issues Page")
+<!-- - [Bugs](https://github.com/Rohit19060/<project-name>/issues "Issues Page")
 
-- [API](<API Link> "API")
+- [API](<API Link> "API") -->
 
-## Screenshots
+<!-- ## Screenshots
 
 ![Home Page](/screenshots/1.png "Home Page")
 
 ![](/screenshots/2.png)
 
 ![](/screenshots/3.png)
-
-## Available Commands
+ -->
+<!-- ## Available Commands
 
 In the project directory, you can run:
 
@@ -46,27 +46,21 @@ For running the server and app together I am using concurrently this helps a lot
 For running the server file on you can use this command.
 
 ### `npm run serve`
-
+ -->
 ## Built With
 
 - JavaScript
 - Node
 - NPM
-- Webpack
+- Handlebars
 - HTML
 - CSS
 
 ## Future Updates
 
-- [ ] Reliable Storage
+- 
 
-## Author
 
-**Rohit Jain**
-
-- [Profile](https://github.com/rohit19060 "Rohit jain")
-- [Email](mailto:rohitjain19060@gmail.com?subject=Hi "Hi!")
-- [Website](https://kingtechnologies.in "Welcome")
 
 ## 🤝 Support
 
