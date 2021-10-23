@@ -1,6 +1,19 @@
 <h1 align="center">Not Projects, Routines</h1>
 
-<p align="center">Make templates for your MS Planners and fill them will data.</p>
+<p>This project integrates with MS Planner to create a plan template, display plans and search plans. This is done through through the MS Graph REST API.</p>
+
+### Display Plans
+A simple view of a plan and it's tasks to facilite the use of the other features of this app. For the moment it is readonly since it is intended as a reference to the plans layout.
+
+### Search Plans
+Through the MS Planner app you can search a plan for a task but there is no way to search for a task in various plans. This part of the app lets you do just that, the search can find partial names to a task but currently only searchs the name/title of a task.
+
+### Create Template
+Currently the template is hard coded into the app, and will permit the user to use a list of names for a set of tasks to be create.
+
+
+
+
 
 ## Links
 
@@ -58,7 +71,8 @@ For running the server file on you can use this command.
 
 ## Future Updates
 
-- 
+- User can edit a template
+- User can create a template
 
 
 
