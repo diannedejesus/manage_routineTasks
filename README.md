@@ -31,7 +31,7 @@ Currently the template is hard coded into the app, and will permit the user to u
 
 ![View of Planners](https://github.com/diannedejesus/manage_routineTasks/planner-viewer.PNG)
 
-![Insert a Template](https://github.com/diannedejesus/manage_routineTasks/planner-templates.PNG)
+![Insert a Template](https://github.com/diannedejesus/manage_routineTasks/blob/main/planner-templates.PNG)
 
 <!-- ## Available Commands
 
