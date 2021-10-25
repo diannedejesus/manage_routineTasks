@@ -27,11 +27,11 @@ Currently the template is hard coded into the app, and will permit the user to u
 
 ## Screenshots
 
-![Home Page](/screenshots/1.png "Home Page")
+<!-- ![Home Page](/screenshots/1.png "Home Page") -->
 
-![](/planner-viewer.png)
+![View of Planners](/planner-viewer.png)
 
-![](/planner-templates.png)
+![Insert a Template](/planner-templates.png)
 
 <!-- ## Available Commands
 
