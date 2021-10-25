@@ -25,14 +25,14 @@ Currently the template is hard coded into the app, and will permit the user to u
 
 - [API](<API Link> "API") -->
 
-<!-- ## Screenshots
+## Screenshots
 
 ![Home Page](/screenshots/1.png "Home Page")
 
 ![](/screenshots/2.png)
 
 ![](/screenshots/3.png)
- -->
+
 <!-- ## Available Commands
 
 In the project directory, you can run:
