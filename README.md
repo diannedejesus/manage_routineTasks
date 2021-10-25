@@ -73,6 +73,7 @@ For running the server file on you can use this command.
 
 - User can edit a template
 - User can create a template
+- Generate a preview of plan to be created
 
 
 
