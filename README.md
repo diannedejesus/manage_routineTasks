@@ -29,9 +29,9 @@ Currently the template is hard coded into the app, and will permit the user to u
 
 <!-- ![Home Page](/screenshots/1.png "Home Page") -->
 
-![View of Planners](/planner-viewer.png)
+![View of Planners](https://github.com/diannedejesus/manage_routineTasks/planner-viewer.png)
 
-![Insert a Template](/planner-templates.png)
+![Insert a Template](https://github.com/diannedejesus/manage_routineTasks/planner-templates.png)
 
 <!-- ## Available Commands
 
