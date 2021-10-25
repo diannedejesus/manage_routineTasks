@@ -29,7 +29,7 @@ Currently the template is hard coded into the app, and will permit the user to u
 
 <!-- ![Home Page](/screenshots/1.png "Home Page") -->
 
-![View of Planners](https://github.com/diannedejesus/manage_routineTasks/planner-viewer.PNG)
+![View of Planners](https://github.com/diannedejesus/manage_routineTasks/blob/main/planner-viewer.PNG)
 
 ![Insert a Template](https://github.com/diannedejesus/manage_routineTasks/blob/main/planner-templates.PNG)
 
