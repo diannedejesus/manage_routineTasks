@@ -2,6 +2,9 @@
 
 <p>This project integrates with MS Planner to create a plan template, display plans and search plans. This is done through through the MS Graph REST API.</p>
 
+### Home
+Informative page about the project
+
 ### Display Plans
 A simple view of a plan and it's tasks to facilite the use of the other features of this app. For the moment it is readonly since it is intended as a reference to the plans layout.
 
@@ -12,7 +15,10 @@ Through the MS Planner app you can search a plan for a task but there is no way 
 Currently the template is hard coded into the app, and will permit the user to use a list of names for a set of tasks to be create.
 
 
+<!-- 
+This application was made with the MVC model in mind. Through passport we validate users and update there crediential for the MS Graph API token.
 
+ -->
 
 
 ## Links
@@ -29,9 +35,9 @@ Currently the template is hard coded into the app, and will permit the user to u
 
 <!-- ![Home Page](/screenshots/1.png "Home Page") -->
 
-![View of Planners](https://github.com/diannedejesus/manage_routineTasks/blob/main/planner-viewer.PNG)
+![View of Planners](https://github.com/diannedejesus/manage_routineTasks/blob/main/planner-viewer.PNG 'View Plans')
 
-![Insert a Template](https://github.com/diannedejesus/manage_routineTasks/blob/main/planner-templates.PNG)
+![Insert a Template](https://github.com/diannedejesus/manage_routineTasks/blob/main/planner-templates.PNG 'Insert Template')
 
 <!-- ## Available Commands
 
@@ -68,6 +74,7 @@ For running the server file on you can use this command.
 - Handlebars
 - HTML
 - CSS
+- MVC
 
 ## Future Updates
 

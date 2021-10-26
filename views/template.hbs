@@ -1,11 +1,15 @@
 {{#if isPlanner}}
 
   <form action='../planner/createTemplate' method='POST'>
-    <p>Templates:</p>
+    <h1>Templates</h1>
 
-    <input type='radio' id='template' name='template' value='monthyRevision'> <label for='template'>Monthly Determination of Elegibility</label>
+    <label>Select a template</label>
+    <select name='templateId'>
+          <option value='monthlyRevision'>Monthly Determination of Elegibility</option>
+    </select>
+    <br> <br>
+    <label>Select Group</label>
     <p>Choose the group to add the the template to:</p>
-
     <select name='groupId'>
       
         {{#each items.value}} 
@@ -14,6 +18,9 @@
 
     </select>
     <br> <br>
+    <label for='name'>Enter Name</label>
+    <input type="text" name="name" id="name" placeholder="Name">
+
     <label for='nameList'>Enter list</label>
     <input type="text" name="nameList" id="nameList" placeholder="comma seperated list of names">
     <br> <br>

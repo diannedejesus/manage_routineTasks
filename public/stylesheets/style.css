@@ -8,6 +8,9 @@ body {
 
 input, button{border: none;}
 
+label{
+  display: block;
+}
 .alert-pre {
   word-wrap: break-word;
   word-break: break-all;
