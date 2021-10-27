@@ -16,13 +16,13 @@
   <body>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
       <div class="container">
-        <a href="/" class="navbar-brand">Planner Intergration <p style='margin:0;font-size: small;font-style: italic;text-align: center;'>(MSGRAPH REST API)</p></a>
+        <a href="/" class="navbar-brand w-40 mr-auto">Planner Intergration <p style='margin:0;font-size: small;font-style: italic;'>(MSGRAPH REST API)</p></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
           aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-          <ul class="navbar-nav mr-auto">
+        <div class="collapse navbar-collapse w-100" id="navbarCollapse">
+          <ul class="navbar-nav w-100 justify-content-center">
             {{#if user}}
               <li class="nav-item" data-turbolinks="false">
                 <a href="/planner" class="nav-link{{#if active.calendar}} active{{/if}}">Planners</a>

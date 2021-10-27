@@ -1,13 +1,30 @@
 {{#if isPlanner}}
+  <h1>Templates</h1>
 
   <form action='../planner/createTemplate' method='POST'>
-    <h1>Templates</h1>
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <label class="input-group-text" for="inputGroupSelect01">Select a template</label>
+      </div>
+      <select class="custom-select" id="inputGroupSelect01">
+        <option selected>Choose...</option>
+        <option value="monthlyRevision">Monthly Determination of Elegibility</option>
+      </select>
+    </div>
 
-    <label>Select a template</label>
-    <select name='templateId'>
-          <option value='monthlyRevision'>Monthly Determination of Elegibility</option>
-    </select>
-    <br> <br>
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <label class="input-group-text" for="inputGroupSelect01">Select a Group</label>
+      </div>
+      <select class="custom-select" id="inputGroupSelect01" name='groupId'>
+        <option selected>Choose...</option>
+        {{#each items.value}} 
+          <option value='{{this.id}}'>{{this.displayName}}</option>
+        {{/each}}
+      </select>
+    </div>
+
+    {{!-- <br> <br>
     <label>Select Group</label>
     <p>Choose the group to add the the template to:</p>
     <select name='groupId'>
@@ -16,15 +33,30 @@
           <option value='{{this.id}}'>{{this.displayName}}</option>
         {{/each}}
 
-    </select>
-    <br> <br>
-    <label for='name'>Enter Name</label>
-    <input type="text" name="name" id="name" placeholder="Name">
+    </select> --}}
 
-    <label for='nameList'>Enter list</label>
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1">Plan Name</span>
+      </div>
+      <input type="text" class="form-control" placeholder="Enter a name for this plan" aria-label="planname" aria-describedby="basic-addon1" name='planName'>
+    </div>
+
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1">Enter list</span>
+      </div>
+      <input type="text" class="form-control" placeholder="comma seperated list of names" aria-label="planname" aria-describedby="basic-addon1" name="nameList">
+    </div>
+
+    {{!-- <br> <br>
+    <label for='name'>Enter Name</label>
+    <input type="text" name="name" id="name" placeholder="Name"> --}}
+
+    {{!-- <label for='nameList'>Enter list</label>
     <input type="text" name="nameList" id="nameList" placeholder="comma seperated list of names">
-    <br> <br>
-    <input type="submit" value="Submit">
+    <br> <br> --}}
+    <input class="btn btn-primary btn-lg" type="submit" value="Submit">
   </form>
 
 {{else if isCreated}}
