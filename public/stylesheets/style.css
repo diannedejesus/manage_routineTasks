@@ -21,6 +21,17 @@ html, body {
   width: 100%;
 }
 
+.doubleLayout{
+  float: left;
+  width: 49%;
+  padding: 2rem;
+}
+
+.preview{
+  background-color: #dbdbdb;
+  overflow-x: scroll;
+}
+
 
 
 .task_container {
@@ -188,8 +199,8 @@ html, body {
 }
 
 main ul{
-  margin: 0 auto;
-  width: 50%;
+  /* margin: 0 auto; */
+  /* width: 50%; */
   list-style: none;
 }
 
