@@ -109,20 +109,51 @@ module.exports = {
 
     createTemplate: async (req, res, next) => {
         //Need to specify the group first use like searchterm
-        const planName = 'Plan Name'
-        const packetBucket = 'Packet'
-        let taskList = req.body.nameList
-        const taskName = ' - Packet'
-        const packetChecklist = ['Form Booklet', 'Form Low Income', 'Civil status', 'Form System Permision', 'Water certification', 'Electricity certification']
-        console.log(req)
+        const planName = req.body.planName === '' ? "No Name" : req.body.planName
+        const packetBucket = 'Participant Documents'
+        let taskList = req.body.nameList.split(',')
+        const taskName = ' - Documents'
+        const packetChecklist = [
+            'Desempleo',
+            'Antecedente Penal',
+            'ASUME',
+            'PAN/TANF',
+            'Ofensores Sexuales',
+            'Utilidades',
+            'Libreto de Revision',
+            'Ingresos Limitado',
+            'Estado Civil',
+           ' Notificacion EIV',
+            'AAA',
+            'AEE',
+            'Empleo',
+            'Otros Ingresos (ayuda familiar, acuerdo mutuo, negocio propio, ect.)',
+            'Estado Bancario',
+            'ID'
+        ]
+        const documentNotes = 
+        `
+        Desempleo: https://desempleo.trabajo.pr.gov/UICertificate/Language.aspx
+        Antecedente Penal: https://servicios.pr.gov/info
+        ASUME: https://app.asume.pr.gov/Individuals
+        PAN/TANF: https://servicios.adsef.pr.gov/views/certServicio.aspx
+
+        Ofensores Sexuales:
+        https://www.nsopw.gov/
+        http://sor.pr.gov/
+        https://municipiodegurabo.sharepoint.com/:b:/s/Section8/EYIamtx9-lVAvCiyC78djysBTCGkqBrJzUu-BEo5KIdESA?e=voIqZu
+
+        Utilidades:
+        https://municipiodegurabo.sharepoint.com/:b:/s/Section8/EXhZliQ1titHlhlEcF4HFOQB7mymz5Y77A3rfq8lhP7-lg?e=FZb3f9
+        `
+//console.log(req)
         //create a plan --- accessToken, groupId, planTitle
         const createdPlan = await graph.createPlan(req.session.accessToken, req.body.groupId, planName)
         
         //create buckets --- accessToken, bucketName, planId
         const createdBucket = await graph.createBucket(req.session.accessToken, packetBucket, createdPlan.id)
 
-        taskList = taskList.split(',')
-        taskList = taskList.foreach(el => el.trim())
+        taskList.forEach(el => el.trim())
         
         //tasklist
         for(items of taskList){
@@ -133,17 +164,8 @@ module.exports = {
             let createdTaskDetails =  await graph.getDetailedTask(req.session.accessToken, createdTask.id)
 
             //update task to add checklist --- accessToken, taskID
-            let updatedTask = await graph.updateDetailedTask(req.session.accessToken, createdTask.id, createdTaskDetails['@odata.etag'], packetChecklist)
+            let updatedTask = await graph.updateDetailedTask(req.session.accessToken, createdTask.id, createdTaskDetails['@odata.etag'], packetChecklist, documentNotes)
         }
-
-        // //create task --- accessToken, title, planId, bucketId, assignments = {}
-        // const createdTask = await graph.createTask(req.session.accessToken, taskName, createdPlan.id, createdBucket.id)
-        
-        // //getDetailedTask: getTasks(accessToken, taskID)
-        // const createdTaskDetails =  await graph.getDetailedTask(req.session.accessToken, createdTask.id)
-
-        // //update task to add checklist --- accessToken, taskID
-        // const updatedTask = await graph.updateDetailedTask(req.session.accessToken, createdTask.id, createdTaskDetails['@odata.etag'], packetChecklist)
         
         let params = {
             active: { home: true },

@@ -258,15 +258,18 @@ module.exports = {
     }
   },
 
-  updateDetailedTask: async function getTasks(accessToken, taskID, currentEtag, checklistNames) {
+  updateDetailedTask: async function getTasks(accessToken, taskID, currentEtag, checklistNames, description) {
     console.log('getDetailedTask')
     try{
       const client = getAuthenticatedClient(accessToken);
-      let checklistItems = {checklist: {}}
+      let checklistItems = {
+        checklist: {},
+        description: description,
+    }
       let num = 0
 
       for (names of checklistNames){
-        checklistItems.checklist[`95e27074-6c4a-447a-aa24-9d718a0b86f${num}`] = {
+        checklistItems.checklist[`95e27074-6c4a-447a-aa24-9d718a0b86${num}`] = {
             "@odata.type": "microsoft.graph.plannerChecklistItem",
             "title": names,
             "isChecked": false
